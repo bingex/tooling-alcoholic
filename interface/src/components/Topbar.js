@@ -5,7 +5,7 @@ export default function Topbar() {
   return (
     <div>
       <Link to="/">Homepage</Link>
-      <Link to="/me">My account</Link>
+      <Link to="/signup">Signup</Link>
     </div>
   );
 }
