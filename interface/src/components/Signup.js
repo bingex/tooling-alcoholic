@@ -16,10 +16,10 @@ export default function SignupForm() {
     event.preventDefault();
 
     const field = event.target.name;
-    const identificator = event.target.value;
+    const identifier = event.target.value;
 
-    if (identificator !== '') {
-      apiGetUser(identificator).then(res => {
+    if (identifier !== '') {
+      apiGetUser(identifier).then(res => {
         let errorsUpdated = errors;
         let invalid;
         if (res.data.user) {
