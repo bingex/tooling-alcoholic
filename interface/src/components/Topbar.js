@@ -6,6 +6,7 @@ export default function Topbar() {
     <div>
       <Link to="/">Homepage</Link>
       <Link to="/signup">Signup</Link>
+      <Link to="/login">Login</Link>
     </div>
   );
 }

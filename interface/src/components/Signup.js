@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import Validator from 'validator';
 import { apiGetUser, apiUserSignupRequest } from './../utils/api';
@@ -24,7 +24,7 @@ export default function SignupForm() {
         let invalid;
         if (res.data.user) {
           invalid = true;
-          errorsUpdated[field] = 'There is user with such ' + field;
+          errorsUpdated[field] = `There is user with such ${field}`;
         } else {
           invalid = false;
           errorsUpdated[field] = '';
@@ -72,11 +72,9 @@ export default function SignupForm() {
       }).then(
         () => {
           alert('success');
-          // this.props.addFlashMessage({
-          //   type: 'success',
-          //   text: 'You have signed up successfully. Welcome!'
-          // });
-          // this.context.router.push('/');
+          /**
+           * TODO: add notification and redirect to user ME page
+           */
         },
         err => {
           setLoading(false);
@@ -89,6 +87,9 @@ export default function SignupForm() {
   }
 
   function validateInputs() {
+    /**
+     * TODO: move error text to constants
+     */
     let errors = {};
 
     if (Validator.isEmpty(username.value)) {
@@ -132,33 +133,26 @@ export default function SignupForm() {
     <form onSubmit={onSubmit}>
       <h1>Join our community!</h1>
 
-      <div className={errors.username ? 'has_error' : ''}>
-        <label>Username</label>
-        <input {...username} />
-        {errors.username && <span>{errors.username}</span>}
-      </div>
-
-      <div className={errors.username ? 'has_error' : ''}>
-        <label>Email</label>
-        <input {...email} />
-        {errors.email && <span>{errors.email}</span>}
-      </div>
-
-      <div className={errors.password ? 'has_error' : ''}>
-        <label>Password</label>
-        <input {...password} />
-        {errors.password && <span>{errors.password}</span>}
-      </div>
-
-      <div className={errors.passwordConfirmation ? 'has_error' : ''}>
-        <label>Password confirmation</label>
-        <input {...passwordConfirmation} />
-        {errors.passwordConfirmation && (
-          <span>{errors.passwordConfirmation}</span>
-        )}
-      </div>
+      <TextField label="Username" field={username} error={errors.username} />
+      <TextField label="Email" field={email} error={errors.email} />
+      <TextField label="Password" field={password} error={errors.password} />
+      <TextField
+        label="Password confirmation"
+        field={passwordConfirmation}
+        error={errors.passwordConfirmation}
+      />
 
       <button disabled={isLoading || invalid}>Sign up</button>
     </form>
   );
 }
+
+const TextField = ({ field, label, error }) => {
+  return (
+    <div className={error ? 'has_error' : ''}>
+      <label>{label}</label>
+      <input {...field} />
+      {error && <span>{error}</span>}
+    </div>
+  );
+};
