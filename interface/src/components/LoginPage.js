@@ -4,10 +4,10 @@ import isEmpty from 'lodash/isEmpty';
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'redux-react-hook';
 import { apiLogin } from '../utils/api';
-import { setCurrentUser } from './../store/actions/authActions';
-import setAuthToken from './../utils/setAuthToken';
+import { setCurrentUser } from '../store/actions/authActions';
+import setAuthToken from '../utils/setAuthToken';
 
-export default function Login() {
+export default function Login(props) {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -74,9 +74,7 @@ export default function Login() {
           localStorage.setItem('jwtToken', token);
           setAuthToken(token);
           dispatch(setCurrentUser(jwtDecode(token)));
-          /**
-           * TODO: redirect
-           */
+          props.history.push('/me');
         },
         err => {
           setErrors(prevState => {

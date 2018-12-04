@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import Validator from 'validator';
-import { apiGetUser, apiUserSignupRequest } from './../utils/api';
+import { apiGetUser, apiUserSignupRequest } from '../utils/api';
 
-export default function SignupForm() {
+export default function SignupForm(props) {
   const [errors, setErrors] = useState({});
   const [invalid, setInvalid] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -72,9 +72,7 @@ export default function SignupForm() {
       }).then(
         () => {
           alert('success');
-          /**
-           * TODO: add notification and redirect to user ME page
-           */
+          props.history.push('me');
         },
         err => {
           setLoading(false);
