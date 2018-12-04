@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'redux-react-hook';
 import { apiLogin } from '../utils/api';
-import { setCurrentUser } from './../store/actions/userActions';
+import { setCurrentUser } from './../store/actions/authActions';
 import setAuthToken from './../utils/setAuthToken';
 
 export default function Login() {
