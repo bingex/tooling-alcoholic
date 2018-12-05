@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Homepage from './components/Homepage';
+import HomePage from './components/HomePage';
 import SignupPage from './components/SignupPage';
 import LoginPage from './components/LoginPage';
 import Me from './components/Me';
 import NavigationBar from './components/NavigationBar';
 import NotFound from './components/NotFound';
+import ToolTypePage from './components/ToolTypePage';
 
 export default function AppRouter() {
   return (
@@ -13,9 +14,10 @@ export default function AppRouter() {
       <React.Fragment>
         <NavigationBar />
         <Switch>
-          <Route exact path="/" component={Homepage} />
+          <Route exact path="/" component={HomePage} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/tool_types" component={ToolTypePage} />
           <Route path="/me" component={Me} />
           <Route component={NotFound} />
         </Switch>

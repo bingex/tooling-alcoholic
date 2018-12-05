@@ -13,3 +13,7 @@ export function apiUserSignupRequest(data) {
 export function apiLogin(data) {
   return axios.post(`${API_URL}/api/auth`, data);
 }
+
+export function apiGetToolTypes() {
+  return axios.get(`${API_URL}/api/tool_types`);
+}
