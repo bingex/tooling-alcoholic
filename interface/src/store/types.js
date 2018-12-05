@@ -1,2 +1,3 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const GET_TOOL_TYPES = 'GET_TOOL_TYPES';
+export const ADD_NEW_TOOL_TYPE = 'ADD_NEW_TOOL_TYPE';

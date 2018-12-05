@@ -1,5 +1,6 @@
 import express from 'express';
 import ToolType from './../models/toolType';
+import isEmpty from 'lodash/isEmpty';
 
 let router = express.Router();
 
@@ -22,8 +23,8 @@ router.post('/', (req, res) => {
         name
       })
         .save()
-        .then(user => res.json({ success: true }))
-        .catch(error => res.status(500).json({ error: err }));
+        .then(() => res.json({ success: true }))
+        .catch(() => res.status(500).json({ error: err }));
     } else {
       res.status(400).json(errors);
     }
@@ -31,7 +32,7 @@ router.post('/', (req, res) => {
 });
 
 function validateInput(data) {
-  let errors;
+  let errors = {};
 
   return ToolType.query({
     where: { name: data.name }

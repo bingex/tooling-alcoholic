@@ -18,6 +18,7 @@ function NavigationBar(props) {
       {props.isAuthenticated ? (
         <div>
           <span>LOGGED IN</span>
+          <Link to="/tool_types">Tool types</Link>
           <button onClick={logout}>Logout</button>
         </div>
       ) : (

@@ -17,3 +17,7 @@ export function apiLogin(data) {
 export function apiGetToolTypes() {
   return axios.get(`${API_URL}/api/tool_types`);
 }
+
+export function apiSetToolTypes(data) {
+  return axios.post(`${API_URL}/api/tool_types`, data);
+}
