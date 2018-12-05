@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 import jwtDecode from 'jwt-decode';
-import { useDispatch } from 'redux-react-hook';
+import { connect } from 'react-redux';
 import { apiLogin } from '../utils/api';
 import { setCurrentUser } from '../store/actions/authActions';
 import setAuthToken from '../utils/setAuthToken';
 
-export default function Login(props) {
-  const dispatch = useDispatch();
+function Login(props) {
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const identifier = useInput('', 'identifier');
@@ -73,7 +72,7 @@ export default function Login(props) {
           const token = res.data.token;
           localStorage.setItem('jwtToken', token);
           setAuthToken(token);
-          dispatch(setCurrentUser(jwtDecode(token)));
+          props.setCurrentUser(jwtDecode(token));
           props.history.push('/me');
         },
         err => {
@@ -110,3 +109,8 @@ export default function Login(props) {
     </form>
   );
 }
+
+export default connect(
+  null,
+  { setCurrentUser }
+)(Login);

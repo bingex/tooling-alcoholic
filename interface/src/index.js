@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
-import { StoreProvider } from 'redux-react-hook';
+import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import App from './components/App';
@@ -13,8 +13,8 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <StoreProvider value={store}>
+  <Provider store={store}>
     <App />
-  </StoreProvider>,
+  </Provider>,
   document.getElementById('app')
 );

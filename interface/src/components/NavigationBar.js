@@ -1,29 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useMappedState } from 'redux-react-hook';
-import { useDispatch } from 'redux-react-hook';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { setCurrentUser } from './../store/actions/authActions';
 import setAuthToken from './../utils/setAuthToken';
 
-const mapState = state => ({
-  isAuthenticated: state.authReducer.isAuthenticated
-});
-
-export default withRouter(function NavigationBar(props) {
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useMappedState(mapState);
-
+function NavigationBar(props) {
   function logout() {
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
-    dispatch(setCurrentUser({}));
+    props.setCurrentUser({});
     props.history.push('/');
   }
 
   return (
     <div>
-      {isAuthenticated ? (
+      {props.isAuthenticated ? (
         <div>
           <span>LOGGED IN</span>
           <button onClick={logout}>Logout</button>
@@ -36,4 +28,17 @@ export default withRouter(function NavigationBar(props) {
       )}
     </div>
   );
-});
+}
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authReducer.isAuthenticated
+  };
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { setCurrentUser }
+  )(NavigationBar)
+);

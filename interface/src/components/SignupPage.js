@@ -72,7 +72,7 @@ export default function SignupForm(props) {
       }).then(
         () => {
           alert('success');
-          props.history.push('me');
+          props.history.push('login');
         },
         err => {
           setLoading(false);
