@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import Validator from 'validator';
 import { apiGetUser, apiUserSignupRequest } from '../utils/api';
+import { setErrors } from '../store/actions/commonActions';
+import styles from './../styles/common.css';
+import { connect } from 'react-redux';
 
-export default function SignupForm(props) {
-  const [errors, setErrors] = useState({});
+function SignupForm(props) {
   const [invalid, setInvalid] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const username = useInput('', 'username');
@@ -20,19 +22,17 @@ export default function SignupForm(props) {
 
     if (identifier !== '') {
       apiGetUser(identifier).then(res => {
-        let errorsUpdated = errors;
+        let errors;
         let invalid;
         if (res.data.user) {
           invalid = true;
-          errorsUpdated[field] = `There is user with such ${field}`;
+          errors[field] = `There is user with such ${field}`;
         } else {
           invalid = false;
-          errorsUpdated[field] = '';
+          errors[field] = '';
         }
         setInvalid(invalid);
-        setErrors(prevState => {
-          return { ...prevState, ...errorsUpdated };
-        });
+        props.setErrors(errors);
       });
     }
   }
@@ -61,7 +61,7 @@ export default function SignupForm(props) {
     event.preventDefault();
 
     if (isValid()) {
-      setErrors({});
+      props.setErrors({});
       setLoading(true);
 
       apiUserSignupRequest({
@@ -76,9 +76,9 @@ export default function SignupForm(props) {
         },
         err => {
           setLoading(false);
-          setErrors(prevState => {
-            return { ...prevState, ...err.response.data };
-          });
+          if (err.response) {
+            props.setErrors(err.response.data);
+          }
         }
       );
     }
@@ -91,19 +91,19 @@ export default function SignupForm(props) {
     let errors = {};
 
     if (Validator.isEmpty(username.value)) {
-      errors.username = 'The field is required';
+      errors.username = 'Username is required';
     }
     if (Validator.isEmpty(email.value)) {
-      errors.email = 'The field is required';
+      errors.email = 'Email is required';
     }
     if (!Validator.isEmail(email.value)) {
       errors.email = 'Email is invalid';
     }
     if (Validator.isEmpty(password.value)) {
-      errors.password = 'The field is required';
+      errors.password = 'Password is required';
     }
     if (Validator.isEmpty(passwordConfirmation.value)) {
-      errors.passwordConfirmation = 'The field is required';
+      errors.passwordConfirmation = 'Password confirm is required';
     }
     if (!Validator.equals(password.value, passwordConfirmation.value)) {
       errors.passwordConfirmation = 'Passwords must match';
@@ -119,38 +119,62 @@ export default function SignupForm(props) {
     const { errors, isValid } = validateInputs();
 
     if (!isValid) {
-      setErrors(prevState => {
-        return { ...prevState, ...errors };
-      });
+      props.setErrors(errors);
     }
 
     return isValid;
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Join our community!</h1>
+    <div className={styles['central-section']}>
+      <form onSubmit={onSubmit} className={styles['central-section-form']}>
+        <h4 className={styles['central-section-headline']}>
+          Join our community!
+        </h4>
 
-      <TextField label="Username" field={username} error={errors.username} />
-      <TextField label="Email" field={email} error={errors.email} />
-      <TextField label="Password" field={password} error={errors.password} />
-      <TextField
-        label="Password confirmation"
-        field={passwordConfirmation}
-        error={errors.passwordConfirmation}
-      />
+        <TextField
+          label="Username"
+          field={username}
+          error={props.errors.username}
+        />
+        <TextField label="Email" field={email} error={props.errors.email} />
+        <TextField
+          label="Password"
+          field={password}
+          error={props.errors.password}
+        />
+        <TextField
+          label="Password confirmation"
+          field={passwordConfirmation}
+          error={props.errors.passwordConfirmation}
+        />
 
-      <button disabled={isLoading || invalid}>Sign up</button>
-    </form>
+        <div className={styles['btn-wrapper']}>
+          <button className={styles.btn} disabled={isLoading || invalid}>
+            Sign up
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
 const TextField = ({ field, label, error }) => {
   return (
-    <div className={error ? 'has_error' : ''}>
-      <label>{label}</label>
-      <input {...field} />
-      {error && <span>{error}</span>}
+    <div className={styles.field}>
+      <label className={styles.field__label}>{label}</label>
+      <input {...field} className={styles.field__input} />
     </div>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    errors: state.commonReducer.errors
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { setErrors }
+)(SignupForm);

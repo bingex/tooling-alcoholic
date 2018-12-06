@@ -7,8 +7,7 @@ import { apiLogin } from '../utils/api';
 import { setCurrentUser } from '../store/actions/authActions';
 import { setErrors } from '../store/actions/commonActions';
 import setAuthToken from '../utils/setAuthToken';
-import styles from './../styles/login.css';
-import commonStyles from './../styles/common.css';
+import styles from './../styles/common.css';
 
 function Login(props) {
   const [isLoading, setLoading] = useState(false);
@@ -26,7 +25,7 @@ function Login(props) {
       value,
       name,
       onChange: handleChange,
-      className: commonStyles.field__input
+      className: styles.field__input
     };
 
     if (name === 'identifier') {
@@ -40,7 +39,7 @@ function Login(props) {
     const { errors, isValid } = validateInputs();
 
     if (!isValid) {
-      props.setErrors({ errors });
+      props.setErrors(errors);
     }
 
     return isValid;
@@ -50,11 +49,11 @@ function Login(props) {
     let errors = {};
 
     if (Validator.isEmpty(identifier.value)) {
-      errors.identifier = 'The field is required';
+      errors.identifier = 'Identifier is required';
     }
 
     if (Validator.isEmpty(password.value)) {
-      errors.password = 'The field is required';
+      errors.password = 'Password is required';
     }
 
     return {
@@ -94,19 +93,19 @@ function Login(props) {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <form onSubmit={onSubmit} className={styles.form}>
-        <h4 className={styles.headline}>Login to your account</h4>
+    <div className={styles['central-section']}>
+      <form onSubmit={onSubmit} className={styles['central-section-form']}>
+        <h4 className={styles['central-section-headline']}>
+          Login to your account
+        </h4>
 
-        <div className={commonStyles.field}>
-          <label className={commonStyles.field__label}>
-            Username or email:
-          </label>
+        <div className={styles.field}>
+          <label className={`${styles.field__label}`}>Username or email</label>
           <input {...identifier} />
         </div>
 
-        <div className={commonStyles.field}>
-          <label className={commonStyles.field__label}>Password:</label>
+        <div className={styles.field}>
+          <label className={styles.field__label}>Password</label>
           <input {...password} />
         </div>
 
@@ -120,7 +119,13 @@ function Login(props) {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    errors: state.commonReducer.errors
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { setCurrentUser, setErrors }
 )(Login);

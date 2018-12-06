@@ -9,3 +9,9 @@ body {
   background-color: var(--color-white-rock);
   font-family: sans-serif;
 }
+
+:global(.Toastify__toast--error) {
+  background-color: var(--color-flory);
+  font-size: 14px;
+  border-radius: var(--border-radius);
+}
