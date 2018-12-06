@@ -1,4 +1,4 @@
- ☐ Add tool types table, make migrations.
+ ✔ Add tool types table, make migrations. @done(18-12-06 13:49)
  ☐ Add tool types CRUD, validations, for now all users should have access.
- ☐ Create tool types page on the interface.
+ ✔ Create tool types page on the interface. @done(18-12-06 13:49)
  ☐ Add tools type to tools table, update database.

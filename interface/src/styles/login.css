@@ -1,0 +1,8 @@
+.form {
+  width: 300px;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--color-gin-fizz);
+}

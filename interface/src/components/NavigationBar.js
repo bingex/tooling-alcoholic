@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './../store/actions/authActions';
 import setAuthToken from './../utils/setAuthToken';
+import styles from './../styles/navigation-bar.css';
 
 function NavigationBar(props) {
   function logout() {
@@ -14,7 +15,7 @@ function NavigationBar(props) {
   }
 
   return (
-    <div>
+    <div className={styles.bar}>
       {props.isAuthenticated ? (
         <div>
           <span>LOGGED IN</span>

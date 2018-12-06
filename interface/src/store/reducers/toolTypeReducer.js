@@ -13,6 +13,7 @@ export default (state = initialState, action = {}) => {
       };
     case ADD_NEW_TOOL_TYPE:
       return {
+        ...state,
         types: [...state.types, { name: action.name }]
       };
     default:

@@ -1,0 +1,10 @@
+:root {
+  /* COLORS */
+  --color-limed-spruce: #37474f;
+  --color-porcelain: #eceff1;
+  --color-gin-fizz: #fff8e1;
+
+  /* MEASUREMENTS */
+  --border-radius: 3px;
+  --navigation-bar-height: 40px;
+}

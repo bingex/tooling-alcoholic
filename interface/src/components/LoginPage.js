@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { apiLogin } from '../utils/api';
 import { setCurrentUser } from '../store/actions/authActions';
 import setAuthToken from '../utils/setAuthToken';
+import styles from './../styles/login.css';
+import commonStyles from './../styles/common.css';
 
 function Login(props) {
   const [isLoading, setLoading] = useState(false);
@@ -86,18 +88,26 @@ function Login(props) {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Login</h1>
+    <form onSubmit={onSubmit} className={styles.form}>
+      <h4>Login to your account</h4>
 
       {errors.form && <div>{errors.form}</div>}
 
-      <div className={errors.identifier ? 'has_error' : ''}>
+      <div
+        className={`${commonStyles.field} ${
+          errors.identifier ? 'has_error' : ''
+        }`}
+      >
         <label>Username / Email</label>
         <input {...identifier} />
         {errors.identifier && <span>{errors.identifier}</span>}
       </div>
 
-      <div className={errors.password ? 'has_error' : ''}>
+      <div
+        className={`${commonStyles.field} ${
+          errors.password ? 'has_error' : ''
+        }`}
+      >
         <label>Password</label>
         <input {...password} />
         {errors.password && <span>{errors.password}</span>}
