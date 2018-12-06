@@ -1,5 +1,5 @@
 .wrapper {
-  width: 300px;
+  width: 340px;
   border-radius: var(--border-radius);
   padding: 24px;
   display: flex;
@@ -38,7 +38,7 @@
   color: var(--color-limed-spruce);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 412px) {
   .wrapper {
     height: calc(100vh - var(--navigation-bar-height));
     border-radius: 0;

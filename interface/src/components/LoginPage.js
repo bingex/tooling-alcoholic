@@ -72,16 +72,21 @@ function Login(props) {
 
       apiLogin({ identifier: identifier.value, password: password.value }).then(
         res => {
-          const token = res.data.token;
-          localStorage.setItem('jwtToken', token);
-          setAuthToken(token);
-          props.setCurrentUser(jwtDecode(token));
-          props.history.push('/me');
+          if (res.data) {
+            const token = res.data.token;
+            localStorage.setItem('jwtToken', token);
+            setAuthToken(token);
+            props.setCurrentUser(jwtDecode(token));
+            props.history.push('/me');
+          }
         },
         err => {
-          setErrors(prevState => {
-            return { ...prevState, ...err.response.data.errors };
-          });
+          if (err.response) {
+            setErrors(prevState => {
+              return { ...prevState, ...err.response.data.errors };
+            });
+          }
+
           setLoading(false);
         }
       );
