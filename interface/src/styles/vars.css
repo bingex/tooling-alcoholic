@@ -1,8 +1,13 @@
 :root {
   /* COLORS */
+  /* Color pallete: http://colorpalettes.net/color-palette-3958/ */
   --color-limed-spruce: #37474f;
-  --color-porcelain: #eceff1;
-  --color-gin-fizz: #fff8e1;
+  --color-scooter: #2ebdbd;
+  --color-white-rock: #eff1e4;
+  --color-smart-blue: #537c8e;
+  --color-tan: #ceae7f;
+  --color-spicy-mix: #85583f;
+  --color-white: #ffffff;
 
   /* MEASUREMENTS */
   --border-radius: 3px;

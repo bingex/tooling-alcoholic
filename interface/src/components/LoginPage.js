@@ -25,7 +25,8 @@ function Login(props) {
     let obj = {
       value,
       name,
-      onChange: handleChange
+      onChange: handleChange,
+      className: commonStyles.field__input
     };
 
     if (name === 'identifier') {
@@ -88,35 +89,41 @@ function Login(props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className={styles.form}>
-      <h4>Login to your account</h4>
+    <div className={styles.wrapper}>
+      <form onSubmit={onSubmit} className={styles.form}>
+        <h4 className={styles.headline}>Login to your account</h4>
 
-      {errors.form && <div>{errors.form}</div>}
+        {errors.form && <div>{errors.form}</div>}
 
-      <div
-        className={`${commonStyles.field} ${
-          errors.identifier ? 'has_error' : ''
-        }`}
-      >
-        <label>Username / Email</label>
-        <input {...identifier} />
-        {errors.identifier && <span>{errors.identifier}</span>}
-      </div>
+        <div
+          className={`${commonStyles.field} ${
+            errors.identifier ? 'has_error' : ''
+          }`}
+        >
+          <label className={commonStyles.field__label}>
+            Username or email:
+          </label>
+          <input {...identifier} />
+          {errors.identifier && <span>{errors.identifier}</span>}
+        </div>
 
-      <div
-        className={`${commonStyles.field} ${
-          errors.password ? 'has_error' : ''
-        }`}
-      >
-        <label>Password</label>
-        <input {...password} />
-        {errors.password && <span>{errors.password}</span>}
-      </div>
+        <div
+          className={`${commonStyles.field} ${
+            errors.password ? 'has_error' : ''
+          }`}
+        >
+          <label className={commonStyles.field__label}>Password:</label>
+          <input {...password} />
+          {errors.password && <span>{errors.password}</span>}
+        </div>
 
-      <div>
-        <button disabled={isLoading}>Login</button>
-      </div>
-    </form>
+        <div className={styles['btn-wrapper']}>
+          <button className={styles.btn} disabled={isLoading}>
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
