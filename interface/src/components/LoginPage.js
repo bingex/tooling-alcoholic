@@ -5,13 +5,13 @@ import jwtDecode from 'jwt-decode';
 import { connect } from 'react-redux';
 import { apiLogin } from '../utils/api';
 import { setCurrentUser } from '../store/actions/authActions';
+import { setErrors } from '../store/actions/commonActions';
 import setAuthToken from '../utils/setAuthToken';
 import styles from './../styles/login.css';
 import commonStyles from './../styles/common.css';
 
 function Login(props) {
   const [isLoading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
   const identifier = useInput('', 'identifier');
   const password = useInput('', 'password');
 
@@ -40,7 +40,7 @@ function Login(props) {
     const { errors, isValid } = validateInputs();
 
     if (!isValid) {
-      this.setState({ errors });
+      props.setErrors({ errors });
     }
 
     return isValid;
@@ -68,7 +68,7 @@ function Login(props) {
 
     if (isValid()) {
       setLoading(true);
-      setErrors({});
+      props.setErrors({});
 
       apiLogin({ identifier: identifier.value, password: password.value }).then(
         res => {
@@ -82,9 +82,9 @@ function Login(props) {
         },
         err => {
           if (err.response) {
-            setErrors(prevState => {
-              return { ...prevState, ...err.response.data.errors };
-            });
+            props.setErrors(err.response.data.errors);
+          } else {
+            props.setErrors({ form: 'Something wrong with the connection' });
           }
 
           setLoading(false);
@@ -98,28 +98,16 @@ function Login(props) {
       <form onSubmit={onSubmit} className={styles.form}>
         <h4 className={styles.headline}>Login to your account</h4>
 
-        {errors.form && <div>{errors.form}</div>}
-
-        <div
-          className={`${commonStyles.field} ${
-            errors.identifier ? 'has_error' : ''
-          }`}
-        >
+        <div className={commonStyles.field}>
           <label className={commonStyles.field__label}>
             Username or email:
           </label>
           <input {...identifier} />
-          {errors.identifier && <span>{errors.identifier}</span>}
         </div>
 
-        <div
-          className={`${commonStyles.field} ${
-            errors.password ? 'has_error' : ''
-          }`}
-        >
+        <div className={commonStyles.field}>
           <label className={commonStyles.field__label}>Password:</label>
           <input {...password} />
-          {errors.password && <span>{errors.password}</span>}
         </div>
 
         <div className={styles['btn-wrapper']}>
@@ -134,5 +122,5 @@ function Login(props) {
 
 export default connect(
   null,
-  { setCurrentUser }
+  { setCurrentUser, setErrors }
 )(Login);

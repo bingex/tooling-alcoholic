@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './../store/actions/authActions';
@@ -16,18 +16,40 @@ function NavigationBar(props) {
 
   return (
     <div className={styles.bar}>
-      {props.isAuthenticated ? (
-        <div>
-          <span>LOGGED IN</span>
-          <Link to="/tool_types">Tool types</Link>
-          <button onClick={logout}>Logout</button>
-        </div>
-      ) : (
-        <div>
-          <Link to="/signup">Signup</Link>
-          <Link to="/login">Login</Link>
-        </div>
-      )}
+      <div className={styles['app-name']}>My tools</div>
+      <div>
+        {props.isAuthenticated ? (
+          <div>
+            <NavLink
+              to="/tool_types"
+              className={styles.link}
+              activeClassName={styles['link-active']}
+            >
+              Tool types
+            </NavLink>
+          </div>
+        ) : (
+          <div>
+            <NavLink
+              to="/signup"
+              className={styles.link}
+              activeClassName={styles['link-active']}
+            >
+              Signup
+            </NavLink>
+            <NavLink
+              to="/login"
+              className={styles.link}
+              activeClassName={styles['link-active']}
+            >
+              Login
+            </NavLink>
+          </div>
+        )}
+      </div>
+      <div>
+        <button onClick={logout}>Logout</button>
+      </div>
     </div>
   );
 }

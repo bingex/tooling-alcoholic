@@ -7,6 +7,8 @@
   align-items: center;
   background-color: var(--color-limed-spruce);
   box-sizing: border-box;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  position: relative;
 }
 
 .form {
@@ -36,6 +38,12 @@
   cursor: pointer;
   background-color: var(--color-white);
   color: var(--color-limed-spruce);
+  transition: all 0.4s;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: var(--color-java);
 }
 
 @media (max-width: 412px) {
@@ -43,5 +51,6 @@
     height: calc(100vh - var(--navigation-bar-height));
     border-radius: 0;
     width: 100vw;
+    padding: 10px;
   }
 }

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import AppRouter from './../routes';
 import setAuthToken from './../utils/setAuthToken';
 import { setCurrentUser } from './../store/actions/authActions';
+import { setErrors } from './../store/actions/commonActions';
+import { ToastContainer } from 'react-toastify';
 
 function App(props) {
   if (localStorage.jwtToken) {
@@ -11,10 +13,21 @@ function App(props) {
     props.setCurrentUser(jwtDecode(localStorage.jwtToken));
   }
 
-  return <AppRouter />;
+  return (
+    <div>
+      <ToastContainer autoClose={4000} />
+      <AppRouter />
+    </div>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    errors: state.commonReducer.errors
+  };
 }
 
 export default connect(
-  null,
-  { setCurrentUser }
+  mapStateToProps,
+  { setCurrentUser, setErrors }
 )(App);
