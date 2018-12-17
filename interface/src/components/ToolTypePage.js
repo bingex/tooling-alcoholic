@@ -4,7 +4,10 @@ import {
   getToolTypes,
   addNewToolType
 } from './../store/actions/toolTypeActions';
+import { setErrors } from '../store/actions/commonActions';
 import { apiSetToolTypes } from './../utils/api';
+import styles from './../styles/tool-type.css';
+import { FaPlus } from 'react-icons/fa';
 
 function ToolTypePage(props) {
   const [addAreaIsOpen, showAddArea] = useState(false);
@@ -29,29 +32,45 @@ function ToolTypePage(props) {
    * and after success add it also to store
    */
   function addNewType() {
-    apiSetToolTypes({ name: newTypeName }).then(
-      response => {
+    // Check if name not empty and length > 2
+    if (newTypeName.length < 2) {
+      props.setErrors({
+        toolTypeName: 'Tool type name should be at least 2 symbols'
+      });
+      return false;
+    }
+
+    // Request to server
+    apiSetToolTypes({ name: newTypeName })
+      .then(response => {
         if (response.data.success) {
           props.addNewToolType(newTypeName);
           showAddArea(false);
           setNewTypeName('');
         } else {
-          // TODO: show errors on something (e.g. name is already used)
+          props.setErrors({
+            toolTypeName: 'Something wrong with such tool type name ...'
+          });
         }
-      },
-      () => {
-        // TODO: show errors on something (e.g. name is already used)
-      }
-    );
+      })
+      .catch(errors => {
+        if (errors.response) {
+          props.setErrors(errors.response.data);
+        }
+      });
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {props.types.map((item, index) => (
-        <div key={index}>{item.name}</div>
+        <div className={styles.section} key={index}>
+          {item.name}
+        </div>
       ))}
 
-      <button onClick={showAddArea}>Add new type</button>
+      <button className={styles.addButton} onClick={showAddArea}>
+        <FaPlus size={20} />
+      </button>
 
       {addAreaIsOpen ? (
         <div>
@@ -78,5 +97,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getToolTypes, addNewToolType }
+  { getToolTypes, addNewToolType, setErrors }
 )(ToolTypePage);

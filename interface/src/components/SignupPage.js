@@ -126,35 +126,37 @@ function SignupForm(props) {
   }
 
   return (
-    <div className={styles['central-section']}>
-      <form onSubmit={onSubmit} className={styles['central-section-form']}>
-        <h4 className={styles['central-section-headline']}>
-          Join our community!
-        </h4>
+    <div className={styles.center}>
+      <div className={styles['center-section']}>
+        <form onSubmit={onSubmit} className={styles['center-section-form']}>
+          <h4 className={styles['center-section-headline']}>
+            Join our community!
+          </h4>
 
-        <TextField
-          label="Username"
-          field={username}
-          error={props.errors.username}
-        />
-        <TextField label="Email" field={email} error={props.errors.email} />
-        <TextField
-          label="Password"
-          field={password}
-          error={props.errors.password}
-        />
-        <TextField
-          label="Password confirmation"
-          field={passwordConfirmation}
-          error={props.errors.passwordConfirmation}
-        />
+          <TextField
+            label="Username"
+            field={username}
+            error={props.errors.username}
+          />
+          <TextField label="Email" field={email} error={props.errors.email} />
+          <TextField
+            label="Password"
+            field={password}
+            error={props.errors.password}
+          />
+          <TextField
+            label="Password confirmation"
+            field={passwordConfirmation}
+            error={props.errors.passwordConfirmation}
+          />
 
-        <div className={styles['btn-wrapper']}>
-          <button className={styles.btn} disabled={isLoading || invalid}>
-            Sign up
-          </button>
-        </div>
-      </form>
+          <div className={styles['btn-wrapper']}>
+            <button className={styles.btn} disabled={isLoading || invalid}>
+              Sign up
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
@@ -163,7 +165,7 @@ const TextField = ({ field, label, error }) => {
   return (
     <div className={styles.field}>
       <label className={styles.field__label}>{label}</label>
-      <input {...field} className={styles.field__input} />
+      <input {...field} className={styles.field__input} placeholder={label} />
     </div>
   );
 };

@@ -19,9 +19,12 @@ router.post('/', (req, res) => {
     if (isValid) {
       const { name } = req.body;
 
-      ToolType.forge({
-        name
-      })
+      ToolType.forge(
+        {
+          name
+        },
+        { hasTimestamps: true }
+      )
         .save()
         .then(() => res.json({ success: true }))
         .catch(() => res.status(500).json({ error: err }));

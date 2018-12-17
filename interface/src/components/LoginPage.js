@@ -93,28 +93,32 @@ function Login(props) {
   }
 
   return (
-    <div className={styles['central-section']}>
-      <form onSubmit={onSubmit} className={styles['central-section-form']}>
-        <h4 className={styles['central-section-headline']}>
-          Login to your account
-        </h4>
+    <div className={styles.center}>
+      <div className={styles['center-section']}>
+        <form onSubmit={onSubmit} className={styles['center-section-form']}>
+          <h4 className={styles['center-section-headline']}>
+            Login to your account
+          </h4>
 
-        <div className={styles.field}>
-          <label className={`${styles.field__label}`}>Username or email</label>
-          <input {...identifier} />
-        </div>
+          <div className={styles.field}>
+            <label className={`${styles.field__label}`}>
+              Username or email
+            </label>
+            <input {...identifier} placeholder="Username or email" />
+          </div>
 
-        <div className={styles.field}>
-          <label className={styles.field__label}>Password</label>
-          <input {...password} />
-        </div>
+          <div className={styles.field}>
+            <label className={styles.field__label}>Password</label>
+            <input {...password} placeholder="Password" />
+          </div>
 
-        <div className={styles['btn-wrapper']}>
-          <button className={styles.btn} disabled={isLoading}>
-            Login
-          </button>
-        </div>
-      </form>
+          <div className={styles['btn-wrapper']}>
+            <button className={styles.btn} disabled={isLoading}>
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
