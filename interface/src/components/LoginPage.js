@@ -93,12 +93,10 @@ function Login(props) {
   }
 
   return (
-    <div className={styles.center}>
-      <div className={styles['center-section']}>
-        <form onSubmit={onSubmit} className={styles['center-section-form']}>
-          <h4 className={styles['center-section-headline']}>
-            Login to your account
-          </h4>
+    <div className={styles['section-wrapper']}>
+      <div className={styles['section']}>
+        <form onSubmit={onSubmit} className={styles['section-form']}>
+          <h4 className={styles['section-headline']}>Login to your account</h4>
 
           <div className={styles.field}>
             <label className={`${styles.field__label}`}>
