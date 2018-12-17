@@ -17,7 +17,7 @@ export default (state = initialState, action = {}) => {
           .map(item => action.errors[item])
           .join('. ');
         toast.error(errorsString, {
-          position: toast.POSITION.BOTTOM_RIGHT
+          position: toast.POSITION.BOTTOM_LEFT
         });
       }
 

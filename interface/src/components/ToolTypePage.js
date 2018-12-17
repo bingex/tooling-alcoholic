@@ -7,6 +7,7 @@ import {
 import { setErrors } from '../store/actions/commonActions';
 import { apiSetToolTypes } from './../utils/api';
 import styles from './../styles/tool-type.css';
+import stylesCommon from './../styles/common.css';
 import { FaPlus } from 'react-icons/fa';
 
 function ToolTypePage(props) {
@@ -73,16 +74,21 @@ function ToolTypePage(props) {
       </button>
 
       {addAreaIsOpen ? (
-        <div>
-          <label>Type name:</label>
+        <div className={`${styles.addSection} ${stylesCommon.field}`}>
+          <label className={stylesCommon.field__label}>Type name:</label>
           <input
             type="text"
+            className={stylesCommon.field__input}
             value={newTypeName}
             onChange={event => {
               setNewTypeName(event.target.value);
             }}
           />
-          <button onClick={addNewType}>Add</button>
+          <div className={stylesCommon['btn-wrapper']}>
+            <button className={stylesCommon.btn} onClick={addNewType}>
+              Add
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
