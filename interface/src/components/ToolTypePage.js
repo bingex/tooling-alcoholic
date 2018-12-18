@@ -28,7 +28,7 @@ function ToolTypePage(props) {
 
   function deleteToolType(id) {
     apiDeleteToolType(id).catch(errors => {
-      props.setErrors(errors.response.data);
+      if (errors.response) props.setErrors(errors.response.data);
     });
   }
 

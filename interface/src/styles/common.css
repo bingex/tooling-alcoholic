@@ -91,7 +91,7 @@
 .addSection {
   width: 320px;
   height: calc(100% - var(--navigation-bar-height));
-  background-color: var(--color-smart-blue);
+  background-color: var(--color-lochinvar);
   position: fixed;
   bottom: 0;
   right: 0;

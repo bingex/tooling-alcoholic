@@ -38,17 +38,17 @@
   box-shadow: var(--shadow);
   border: none;
   cursor: pointer;
-  background-color: var(--color-lochinvar);
-  color: var(--color-java);
+  background-color: var(--color-flory);
+  color: var(--color-white);
   transition: all 0.4s;
 }
 
 .addButton:hover {
-  color: var(--color-white);
+  transform: scale(1.1);
 }
 
 .btnCancel {
-  background-color: var(--color-gumbo);
+  background-color: var(--color-scooter);
   color: var(--color-white);
 }
 
@@ -92,9 +92,10 @@
   }
 
   .section {
-    min-width: calc(100% - 20px);
+    min-width: calc(100% - 10px);
     height: 80px;
     margin: 0 5px 10px 5px;
+    padding: 10px;
   }
 
   .addButton {
@@ -102,5 +103,9 @@
     bottom: 10px;
     height: 60px;
     width: 60px;
+  }
+
+  .section__picture {
+    height: 50px;
   }
 }
