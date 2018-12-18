@@ -81,10 +81,30 @@
   color: var(--color-limed-spruce);
   transition: all 0.4s;
   font-weight: bold;
+  margin-left: 10px;
 }
 
 .btn:hover {
   background-color: var(--color-java);
+}
+
+.addSection {
+  width: 320px;
+  height: calc(100% - var(--navigation-bar-height));
+  background-color: var(--color-smart-blue);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-top: var(--navigation-bar-height);
+  padding: 0 20px 20px 20px;
+  box-sizing: border-box;
+  transform: translateX(320px);
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.addSectionOpen {
+  transform: translateX(0);
 }
 
 @media (max-width: 412px) {
@@ -93,5 +113,14 @@
     border-radius: 0;
     width: 100vw;
     padding: 10px;
+  }
+
+  .addSection {
+    width: 100%;
+    transform: translateX(100%);
+  }
+
+  .addSectionOpen {
+    transform: translateX(0);
   }
 }

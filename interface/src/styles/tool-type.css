@@ -36,25 +36,17 @@
   border: none;
   cursor: pointer;
   background-color: var(--color-lochinvar);
-  color: var(--color-white);
+  color: var(--color-java);
   transition: all 0.4s;
 }
 
 .addButton:hover {
-  background-color: var(--color-java);
-  color: var(--color-limed-spruce);
+  color: var(--color-white);
 }
 
-.addSection {
-  width: 320px;
-  height: calc(100% - var(--navigation-bar-height));
-  background-color: var(--color-smart-blue);
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin-top: var(--navigation-bar-height);
-  padding: 0 20px 20px 20px;
-  box-sizing: border-box;
+.btnCancel {
+  background-color: var(--color-gumbo);
+  color: var(--color-white);
 }
 
 @media (max-width: 412px) {
@@ -75,9 +67,5 @@
     bottom: 10px;
     height: 60px;
     width: 60px;
-  }
-
-  .addSection {
-    width: 100%;
   }
 }

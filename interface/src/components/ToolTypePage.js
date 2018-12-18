@@ -61,6 +61,11 @@ function ToolTypePage(props) {
       });
   }
 
+  function cancelAddNew() {
+    showAddArea(false);
+    setNewTypeName('');
+  }
+
   return (
     <div className={styles.wrapper}>
       {props.types.map((item, index) => (
@@ -68,29 +73,35 @@ function ToolTypePage(props) {
           {item.name}
         </div>
       ))}
-
       <button className={styles.addButton} onClick={showAddArea}>
         <FaPlus size={20} />
       </button>
-
-      {addAreaIsOpen ? (
-        <div className={`${styles.addSection} ${stylesCommon.field}`}>
-          <label className={stylesCommon.field__label}>Type name:</label>
-          <input
-            type="text"
-            className={stylesCommon.field__input}
-            value={newTypeName}
-            onChange={event => {
-              setNewTypeName(event.target.value);
-            }}
-          />
-          <div className={stylesCommon['btn-wrapper']}>
-            <button className={stylesCommon.btn} onClick={addNewType}>
-              Add
-            </button>
-          </div>
+      <div
+        className={`${stylesCommon.addSection} ${stylesCommon.field} ${
+          addAreaIsOpen ? stylesCommon.addSectionOpen : ''
+        }`}
+      >
+        <label className={stylesCommon.field__label}>Type name:</label>
+        <input
+          type="text"
+          className={stylesCommon.field__input}
+          value={newTypeName}
+          onChange={event => {
+            setNewTypeName(event.target.value);
+          }}
+        />
+        <div className={stylesCommon['btn-wrapper']}>
+          <button
+            className={`${stylesCommon.btn} ${styles.btnCancel}`}
+            onClick={cancelAddNew}
+          >
+            Cancel
+          </button>
+          <button className={stylesCommon.btn} onClick={addNewType}>
+            Add
+          </button>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }
