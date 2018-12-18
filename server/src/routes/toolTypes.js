@@ -6,7 +6,7 @@ let router = express.Router();
 
 router.get('/', (req, res) => {
   ToolType.query({
-    select: ['name']
+    select: ['name', 'picture']
   })
     .fetchAll()
     .then(tool_types => {
@@ -17,11 +17,12 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   validateInput(req.body).then(({ errors, isValid }) => {
     if (isValid) {
-      const { name } = req.body;
+      const { name, picture } = req.body;
 
       ToolType.forge(
         {
-          name
+          name,
+          picture
         },
         { hasTimestamps: true }
       )

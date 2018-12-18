@@ -20,6 +20,9 @@
   user-select: none;
   color: var(--color-white);
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
 }
 
 .addButton {
@@ -47,6 +50,32 @@
 .btnCancel {
   background-color: var(--color-gumbo);
   color: var(--color-white);
+}
+
+.section__picture {
+  height: 80px;
+}
+
+.section__icon {
+  cursor: pointer;
+  color: var(--color-gumbo);
+}
+
+.section__edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.selectPicture {
+  margin-top: 5px;
+}
+
+.picturePreview {
+  height: 128px;
+  width: 128px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
 @media (max-width: 412px) {

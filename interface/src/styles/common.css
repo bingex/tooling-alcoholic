@@ -107,6 +107,11 @@
   transform: translateX(0);
 }
 
+.addSectionHeadline {
+  margin-bottom: 5px;
+  color: var(--color-limed-spruce);
+}
+
 @media (max-width: 412px) {
   .section {
     height: calc(100vh - var(--navigation-bar-height));

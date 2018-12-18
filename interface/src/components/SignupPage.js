@@ -22,14 +22,13 @@ function SignupForm(props) {
 
     if (identifier !== '') {
       apiGetUser(identifier).then(res => {
-        let errors;
+        let errors = {};
         let invalid;
         if (res.data.user) {
           invalid = true;
           errors[field] = `There is user with such ${field}`;
         } else {
           invalid = false;
-          errors[field] = '';
         }
         setInvalid(invalid);
         props.setErrors(errors);

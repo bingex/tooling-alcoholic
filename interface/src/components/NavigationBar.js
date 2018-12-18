@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setCurrentUser } from './../store/actions/authActions';
 import setAuthToken from './../utils/setAuthToken';
 import styles from './../styles/navigation-bar.css';
+import { MdExitToApp } from 'react-icons/md';
 
 function NavigationBar(props) {
   function logout() {
@@ -20,6 +21,14 @@ function NavigationBar(props) {
       <div>
         {props.isAuthenticated ? (
           <div>
+            <NavLink
+              exact
+              to="/"
+              className={styles.link}
+              activeClassName={styles['link-active']}
+            >
+              Homepage
+            </NavLink>
             <NavLink
               to="/tool_types"
               className={styles.link}
@@ -47,9 +56,7 @@ function NavigationBar(props) {
           </div>
         )}
       </div>
-      <div>
-        <button onClick={logout}>Logout</button>
-      </div>
+      <MdExitToApp onClick={logout} size={24} className={styles.exit} />
     </div>
   );
 }

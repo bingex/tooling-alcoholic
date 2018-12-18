@@ -39,6 +39,16 @@
   color: var(--color-limed-spruce);
 }
 
+.exit {
+  color: var(--color-lochinvar);
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.exit:hover {
+  color: var(--color-white);
+}
+
 @media (max-width: 412px) {
   .bar {
     padding: 0 5px;

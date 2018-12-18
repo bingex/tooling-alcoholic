@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import AppRouter from './../routes';
 import setAuthToken from './../utils/setAuthToken';
 import { setCurrentUser } from './../store/actions/authActions';
-import { setErrors } from './../store/actions/commonActions';
 import { ToastContainer } from 'react-toastify';
 
 function App(props) {
@@ -14,20 +13,14 @@ function App(props) {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <ToastContainer autoClose={4000} />
       <AppRouter />
-    </div>
+    </React.Fragment>
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    errors: state.commonReducer.errors
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  { setCurrentUser, setErrors }
+  null,
+  { setCurrentUser }
 )(App);
