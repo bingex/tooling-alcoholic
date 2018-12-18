@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { apiDeleteToolType } from './../utils/api';
-import AddNewToolTypeSection from './AddNewToolTypeSection';
+import SingleToolType from './SingleToolType';
 
 // State management
-import { getToolTypes } from './../store/actions/toolTypeActions';
+import {
+  getToolTypes,
+  removeToolType
+} from './../store/actions/toolTypeActions';
 import { setErrors } from '../store/actions/commonActions';
 
 // Icons
@@ -37,47 +40,58 @@ function ToolTypePage(props) {
    * @param {Number} id
    */
   function deleteToolType(id) {
-    apiDeleteToolType(id).catch(errors => {
-      if (errors.response) props.setErrors(errors.response.data);
-    });
+    apiDeleteToolType(id)
+      .then(response => {
+        if (response.data.success) {
+          props.removeToolType(id);
+        }
+      })
+      .catch(errors => {
+        if (errors.response) props.setErrors(errors.response.data);
+      });
   }
 
   function editToolType() {
     // TODO: ADD LATER
   }
 
+  /**
+   * Build tool type list from array with data
+   */
+  const toolTypes = props.types.map((item, index) => (
+    <div className={styles.section} key={index}>
+      <div className={styles.section__actions}>
+        <span>{item.name}</span>
+        <span>
+          <MdEdit
+            onClick={() => {
+              editToolType(item.id);
+            }}
+            className={styles.section__icon}
+            size={24}
+          />
+          <MdDelete
+            onClick={() => {
+              deleteToolType(item.id);
+            }}
+            className={styles.section__icon}
+            size={24}
+          />
+        </span>
+      </div>
+      <img className={styles.section__picture} src={item.picture} />
+    </div>
+  ));
+
   return (
     <div className={styles.wrapper}>
-      {props.types.map((item, index) => (
-        <div className={styles.section} key={index}>
-          <div className={styles.section__edit}>
-            <span>{item.name}</span>
-            <span>
-              <MdEdit
-                onClick={editToolType}
-                className={styles.section__icon}
-                size={24}
-              />
-              <MdDelete
-                onClick={() => {
-                  deleteToolType(item.id);
-                }}
-                className={styles.section__icon}
-                size={24}
-              />
-            </span>
-          </div>
-          <img className={styles.section__picture} src={item.picture} />
-        </div>
-      ))}
+      {toolTypes}
+
       <button className={styles.addButton} onClick={showAddArea}>
         <FaPlus size={20} />
       </button>
 
-      <AddNewToolTypeSection
-        addAreaIsOpen={addAreaIsOpen}
-        showAddArea={showAddArea}
-      />
+      <SingleToolType addAreaIsOpen={addAreaIsOpen} showAddArea={showAddArea} />
     </div>
   );
 }
@@ -90,5 +104,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getToolTypes, setErrors }
+  { getToolTypes, removeToolType, setErrors }
 )(ToolTypePage);

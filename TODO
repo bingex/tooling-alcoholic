@@ -1,0 +1,9 @@
+Roadmap to remember each time opening code editor:
+ ✔ Implement type deletion. Simple version without any relations. @done (18-12-18 23:51)
+ ☐ Re-think component model. Component should contains styles inside? Or be in the same folder?
+ ☐ Implement type edit. Think about making shared component for add/edit.
+ ☐ Start making tools page (backend CRUD). Think about relations with users as owner and tool types. Think about fields that should be there.
+ ☐ Make interface component for tools.
+ ☐ Implement deep type tool deletion.
+ ☐ Move adding section to separate component.
+ ☐ Think on loading for each button clicks (till server response).

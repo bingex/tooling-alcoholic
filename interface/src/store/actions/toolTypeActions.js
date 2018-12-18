@@ -1,4 +1,8 @@
-import { GET_TOOL_TYPES, ADD_NEW_TOOL_TYPE } from './../types';
+import {
+  GET_TOOL_TYPES,
+  ADD_NEW_TOOL_TYPE,
+  REMOVE_TOOL_TYPE
+} from './../types';
 import { apiGetToolTypes } from './../../utils/api';
 
 export function getToolTypes() {
@@ -22,5 +26,12 @@ export function addNewToolType(id, name, picture) {
     id,
     name,
     picture
+  };
+}
+
+export function removeToolType(id) {
+  return {
+    type: REMOVE_TOOL_TYPE,
+    id
   };
 }

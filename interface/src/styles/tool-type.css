@@ -49,7 +49,7 @@
 
 .btnCancel {
   background-color: var(--color-scooter);
-  color: var(--color-white);
+  color: var(--color-limed-spruce);
 }
 
 .section__picture {
@@ -67,7 +67,7 @@
   color: var(--color-java);
 }
 
-.section__edit {
+.section__actions {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

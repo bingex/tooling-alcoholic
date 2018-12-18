@@ -9,9 +9,7 @@ router.get('/', (req, res) => {
     select: ['id', 'name', 'picture']
   })
     .fetchAll()
-    .then(tool_types => {
-      res.json({ tool_types });
-    });
+    .then(tool_types => res.json({ tool_types }));
 });
 
 router.post('/', (req, res) => {
@@ -28,9 +26,7 @@ router.post('/', (req, res) => {
       )
         .save()
         .then(response => res.json({ success: true, id: response.id }))
-        .catch(err => {
-          return res.status(500).json({ error: err });
-        });
+        .catch(error => res.status(500).json({ error }));
     } else {
       res.status(400).json(errors);
     }
@@ -38,11 +34,20 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // IMPORTANT: LOOK HERE FOR REMOVING TOOL TYPE THAT IS USED IN TOOL:
+  // TODO: CHECK IF THERE IS SOME TOOL WITH SOME TYPE THAT WE WANT TO DELETE
   // https://arjunphp.com/bookshelf-js-deleting-row-related-rows-many-many-relationship/
   if (!req.params.id) {
     res.status(400).json({ id: 'id field is required' });
   }
+
+  ToolType.query({
+    where: { id: req.params.id }
+  })
+    .destroy()
+    .then(response => res.json({ success: true }))
+    .catch(error =>
+      res.status(500).json({ error: error.message ? error.message : error })
+    );
 });
 
 function validateToolTypeName(data) {

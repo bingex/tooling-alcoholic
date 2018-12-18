@@ -1,4 +1,0 @@
-Steps not to forget what to do next: 
- ☐ Start making tools page (backend CRUD). Think about relations with users as owner and tool types. Think about fields that should be there.
- ☐ Make interface component for tools.
- ☐ Move adding section to separate component.

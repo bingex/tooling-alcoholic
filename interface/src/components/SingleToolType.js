@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { apiSetToolTypes } from '../utils/api';
+
+// State management
 import { addNewToolType } from '../store/actions/toolTypeActions';
-import stylesCommon from './../styles/common.css';
-import styles from './../styles/tool-type.css';
+import { setErrors } from '../store/actions/commonActions';
+
+// Components
 import SelectPicture from './shared/SelectPicture';
 
-function AddNewToolTypeSection(props) {
-  const [newTypeName, setNewTypeName] = useState('');
+// Helpers
+import { apiSetToolTypes } from '../utils/api';
+
+// Styles
+import stylesCommon from './../styles/common.css';
+import styles from './../styles/tool-type.css';
+
+function SingleToolType(props) {
+  const [typeName, setTypeName] = useState('');
   const [previewPicture, changePreviewPicture] = useState(null);
 
   /**
    * Call API to add new tool type
    * and after success add it also to store
    */
-  function addNewType() {
+  function handleSubmit() {
     // Check if name not empty and length > 2
-    if (newTypeName.length < 2) {
+    if (typeName.length < 2) {
       props.setErrors({
         toolTypeName: 'Tool type name should be at least 2 symbols'
       });
@@ -32,12 +41,12 @@ function AddNewToolTypeSection(props) {
     }
 
     // Request to server
-    apiSetToolTypes({ name: newTypeName, picture: previewPicture })
+    apiSetToolTypes({ name: typeName, picture: previewPicture })
       .then(response => {
         if (response.data.success) {
-          props.addNewToolType(response.data.id, newTypeName, previewPicture);
+          props.addNewToolType(response.data.id, typeName, previewPicture);
           props.showAddArea(false);
-          setNewTypeName('');
+          setTypeName('');
           changePreviewPicture(null);
         } else {
           props.setErrors({
@@ -57,10 +66,10 @@ function AddNewToolTypeSection(props) {
    * Refresh preview picture
    * Clean new tool type name
    */
-  function cancelAddNew() {
+  function cancelAction() {
     props.showAddArea(false);
     changePreviewPicture(null);
-    setNewTypeName('');
+    setTypeName('');
   }
 
   return (
@@ -76,9 +85,10 @@ function AddNewToolTypeSection(props) {
         <input
           type="text"
           className={stylesCommon.field__input}
-          value={newTypeName}
+          placeholder="Name"
+          value={typeName}
           onChange={event => {
-            setNewTypeName(event.target.value);
+            setTypeName(event.target.value);
           }}
         />
       </div>
@@ -91,11 +101,11 @@ function AddNewToolTypeSection(props) {
       <div className={stylesCommon['btn-wrapper']}>
         <button
           className={`${stylesCommon.btn} ${styles.btnCancel}`}
-          onClick={cancelAddNew}
+          onClick={cancelAction}
         >
           Cancel
         </button>
-        <button className={stylesCommon.btn} onClick={addNewType}>
+        <button className={stylesCommon.btn} onClick={handleSubmit}>
           Add
         </button>
       </div>
@@ -105,5 +115,5 @@ function AddNewToolTypeSection(props) {
 
 export default connect(
   null,
-  { addNewToolType }
-)(AddNewToolTypeSection);
+  { addNewToolType, setErrors }
+)(SingleToolType);
