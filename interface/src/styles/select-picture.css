@@ -1,0 +1,10 @@
+.selectPicture {
+  margin-top: 5px;
+}
+
+.picturePreview {
+  height: 128px;
+  width: 128px;
+  padding: 20px;
+  margin: 0 auto;
+}

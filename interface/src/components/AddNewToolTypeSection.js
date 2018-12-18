@@ -1,14 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { apiSetToolTypes } from '../utils/api';
 import { addNewToolType } from '../store/actions/toolTypeActions';
 import stylesCommon from './../styles/common.css';
 import styles from './../styles/tool-type.css';
+import SelectPicture from './shared/SelectPicture';
 
 function AddNewToolTypeSection(props) {
   const [newTypeName, setNewTypeName] = useState('');
   const [previewPicture, changePreviewPicture] = useState(null);
-  const imageElement = useRef(null);
 
   /**
    * Call API to add new tool type
@@ -63,25 +63,6 @@ function AddNewToolTypeSection(props) {
     setNewTypeName('');
   }
 
-  /**
-   * Show picture preview after image is uploaded
-   */
-  function previewFile() {
-    let reader = new FileReader();
-
-    reader.addEventListener(
-      'load',
-      () => {
-        changePreviewPicture(reader.result);
-      },
-      false
-    );
-
-    if (imageElement && imageElement.current) {
-      reader.readAsDataURL(imageElement.current.files[0]);
-    }
-  }
-
   return (
     <div
       className={`${stylesCommon.addSection} ${stylesCommon.field} ${
@@ -102,22 +83,10 @@ function AddNewToolTypeSection(props) {
         />
       </div>
 
-      <div className={stylesCommon.field}>
-        <label className={stylesCommon.field__label}>Select picture:</label>
-        <input
-          type="file"
-          onChange={previewFile}
-          ref={imageElement}
-          className={styles.selectPicture}
-        />
-        {previewPicture && (
-          <img
-            className={styles.picturePreview}
-            src={previewPicture}
-            alt="Picture preview..."
-          />
-        )}
-      </div>
+      <SelectPicture
+        previewPicture={previewPicture}
+        changePreviewPicture={changePreviewPicture}
+      />
 
       <div className={stylesCommon['btn-wrapper']}>
         <button
