@@ -16,9 +16,10 @@ export function setToolTypes(types) {
   };
 }
 
-export function addNewToolType(name, picture) {
+export function addNewToolType(id, name, picture) {
   return {
     type: ADD_NEW_TOOL_TYPE,
+    id,
     name,
     picture
   };

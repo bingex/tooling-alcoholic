@@ -5,7 +5,7 @@ import {
   addNewToolType
 } from './../store/actions/toolTypeActions';
 import { setErrors } from '../store/actions/commonActions';
-import { apiSetToolTypes } from './../utils/api';
+import { apiSetToolTypes, apiDeleteToolType } from './../utils/api';
 import styles from './../styles/tool-type.css';
 import stylesCommon from './../styles/common.css';
 import { FaPlus } from 'react-icons/fa';
@@ -57,7 +57,7 @@ function ToolTypePage(props) {
     apiSetToolTypes({ name: newTypeName, picture: previewPicture })
       .then(response => {
         if (response.data.success) {
-          props.addNewToolType(newTypeName, previewPicture);
+          props.addNewToolType(response.data.id, newTypeName, previewPicture);
           showAddArea(false);
           setNewTypeName('');
           changePreviewPicture(null);
@@ -79,6 +79,14 @@ function ToolTypePage(props) {
     changePreviewPicture(null);
     setNewTypeName('');
   }
+
+  function deleteToolType(id) {
+    apiDeleteToolType(id).catch(errors => {
+      props.setErrors(errors.response.data);
+    });
+  }
+
+  function editToolType() {}
 
   function previewFile() {
     let reader = new FileReader();
@@ -103,8 +111,18 @@ function ToolTypePage(props) {
           <div className={styles.section__edit}>
             <span>{item.name}</span>
             <span>
-              <MdEdit className={styles.section__icon} size={24} />
-              <MdDelete className={styles.section__icon} size={24} />
+              <MdEdit
+                onClick={editToolType}
+                className={styles.section__icon}
+                size={24}
+              />
+              <MdDelete
+                onClick={() => {
+                  deleteToolType(item.id);
+                }}
+                className={styles.section__icon}
+                size={24}
+              />
             </span>
           </div>
           <img className={styles.section__picture} src={item.picture} />

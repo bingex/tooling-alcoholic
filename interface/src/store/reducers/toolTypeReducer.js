@@ -12,9 +12,10 @@ export default (state = initialState, action = {}) => {
         types: action.types
       };
     case ADD_NEW_TOOL_TYPE:
+      const { name, picture, id } = action;
       return {
         ...state,
-        types: [...state.types, { name: action.name, picture: action.picture }]
+        types: [...state.types, { name, picture, id }]
       };
     default:
       return state;

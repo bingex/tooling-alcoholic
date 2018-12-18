@@ -21,3 +21,7 @@ export function apiGetToolTypes() {
 export function apiSetToolTypes(data) {
   return axios.post(`${API_URL}/api/tool_types`, data);
 }
+
+export function apiDeleteToolType(id) {
+  return axios.delete(`${API_URL}/api/tool_types/${id}`);
+}

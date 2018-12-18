@@ -6,7 +6,7 @@ let router = express.Router();
 
 router.get('/', (req, res) => {
   ToolType.query({
-    select: ['name', 'picture']
+    select: ['id', 'name', 'picture']
   })
     .fetchAll()
     .then(tool_types => {
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  validateInput(req.body).then(({ errors, isValid }) => {
+  validateToolTypeName(req.body).then(({ errors, isValid }) => {
     if (isValid) {
       const { name, picture } = req.body;
 
@@ -27,15 +27,25 @@ router.post('/', (req, res) => {
         { hasTimestamps: true }
       )
         .save()
-        .then(() => res.json({ success: true }))
-        .catch(() => res.status(500).json({ error: err }));
+        .then(response => res.json({ success: true, id: response.id }))
+        .catch(err => {
+          return res.status(500).json({ error: err });
+        });
     } else {
       res.status(400).json(errors);
     }
   });
 });
 
-function validateInput(data) {
+router.delete('/:id', (req, res) => {
+  // IMPORTANT: LOOK HERE FOR REMOVING TOOL TYPE THAT IS USED IN TOOL:
+  // https://arjunphp.com/bookshelf-js-deleting-row-related-rows-many-many-relationship/
+  if (!req.params.id) {
+    res.status(400).json({ id: 'id field is required' });
+  }
+});
+
+function validateToolTypeName(data) {
   let errors = {};
 
   return ToolType.query({
