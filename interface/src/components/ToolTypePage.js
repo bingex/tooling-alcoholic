@@ -1,22 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  getToolTypes,
-  addNewToolType
-} from './../store/actions/toolTypeActions';
+import { getToolTypes } from './../store/actions/toolTypeActions';
 import { setErrors } from '../store/actions/commonActions';
-import { apiSetToolTypes, apiDeleteToolType } from './../utils/api';
+import { apiDeleteToolType } from './../utils/api';
 import styles from './../styles/tool-type.css';
-import stylesCommon from './../styles/common.css';
 import { FaPlus } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
+import AddNewToolTypeSection from './AddNewToolTypeSection';
 
 function ToolTypePage(props) {
   const [addAreaIsOpen, showAddArea] = useState(false);
-  const [newTypeName, setNewTypeName] = useState('');
-  const [previewPicture, changePreviewPicture] = useState(null);
-  const imageElement = useRef(null);
 
   /**
    * Get all tools from server on initial stage
@@ -32,54 +26,6 @@ function ToolTypePage(props) {
     showAddArea(true);
   }
 
-  /**
-   * Call API to add new tool type
-   * and after success add it also to store
-   */
-  function addNewType() {
-    // Check if name not empty and length > 2
-    if (newTypeName.length < 2) {
-      props.setErrors({
-        toolTypeName: 'Tool type name should be at least 2 symbols'
-      });
-      return false;
-    }
-
-    // Check if it has picture
-    if (!previewPicture) {
-      props.setErrors({
-        toolTypePicture: 'Please add tool type picture'
-      });
-      return false;
-    }
-
-    // Request to server
-    apiSetToolTypes({ name: newTypeName, picture: previewPicture })
-      .then(response => {
-        if (response.data.success) {
-          props.addNewToolType(response.data.id, newTypeName, previewPicture);
-          showAddArea(false);
-          setNewTypeName('');
-          changePreviewPicture(null);
-        } else {
-          props.setErrors({
-            toolTypeName: 'Something wrong with such tool type name ...'
-          });
-        }
-      })
-      .catch(errors => {
-        if (errors.response) {
-          props.setErrors(errors.response.data);
-        }
-      });
-  }
-
-  function cancelAddNew() {
-    showAddArea(false);
-    changePreviewPicture(null);
-    setNewTypeName('');
-  }
-
   function deleteToolType(id) {
     apiDeleteToolType(id).catch(errors => {
       props.setErrors(errors.response.data);
@@ -87,22 +33,6 @@ function ToolTypePage(props) {
   }
 
   function editToolType() {}
-
-  function previewFile() {
-    let reader = new FileReader();
-
-    reader.addEventListener(
-      'load',
-      () => {
-        changePreviewPicture(reader.result);
-      },
-      false
-    );
-
-    if (imageElement && imageElement.current) {
-      reader.readAsDataURL(imageElement.current.files[0]);
-    }
-  }
 
   return (
     <div className={styles.wrapper}>
@@ -131,7 +61,12 @@ function ToolTypePage(props) {
       <button className={styles.addButton} onClick={showAddArea}>
         <FaPlus size={20} />
       </button>
-      <div
+
+      <AddNewToolTypeSection
+        addAreaIsOpen={addAreaIsOpen}
+        showAddArea={showAddArea}
+      />
+      {/* <div
         className={`${stylesCommon.addSection} ${stylesCommon.field} ${
           addAreaIsOpen ? stylesCommon.addSectionOpen : ''
         }`}
@@ -178,7 +113,7 @@ function ToolTypePage(props) {
             Add
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -191,5 +126,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getToolTypes, addNewToolType, setErrors }
+  { getToolTypes, setErrors }
 )(ToolTypePage);
