@@ -10,6 +10,7 @@ import styles from './../styles/tool-type.css';
 import stylesCommon from './../styles/common.css';
 import { FaPlus } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 function ToolTypePage(props) {
   const [addAreaIsOpen, showAddArea] = useState(false);
@@ -100,8 +101,11 @@ function ToolTypePage(props) {
       {props.types.map((item, index) => (
         <div className={styles.section} key={index}>
           <div className={styles.section__edit}>
-            {item.name}
-            <MdEdit className={styles.section__icon} size={24} />
+            <span>{item.name}</span>
+            <span>
+              <MdEdit className={styles.section__icon} size={24} />
+              <MdDelete className={styles.section__icon} size={24} />
+            </span>
           </div>
           <img className={styles.section__picture} src={item.picture} />
         </div>

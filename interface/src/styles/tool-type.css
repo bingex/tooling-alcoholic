@@ -15,7 +15,7 @@
   box-shadow: var(--shadow);
   background-color: var(--color-limed-spruce);
   margin: 0 10px 20px 10px;
-  padding: 20px;
+  padding: 15px;
   box-sizing: border-box;
   user-select: none;
   color: var(--color-white);
@@ -59,6 +59,12 @@
 .section__icon {
   cursor: pointer;
   color: var(--color-gumbo);
+  padding-right: 10px;
+  transition: all 0.4s;
+}
+
+.section__icon:hover {
+  color: var(--color-java);
 }
 
 .section__edit {
