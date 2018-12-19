@@ -26,32 +26,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [/src/],
         use: [
           require.resolve('style-loader'),
           {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        exclude: [/node_modules/],
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]_[local]_[hash:base64]',
-              sourceMap: true,
-              minimize: true
             }
           }
         ]

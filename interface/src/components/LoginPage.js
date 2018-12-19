@@ -7,7 +7,18 @@ import { apiLogin } from '../utils/api';
 import { setCurrentUser } from '../store/actions/authActions';
 import { setErrors } from '../store/actions/commonActions';
 import setAuthToken from '../utils/setAuthToken';
-import styles from './../styles/common.css';
+
+import {
+  Styled__Field,
+  Styled__FieldLabel,
+  Styled__FieldInput,
+  Styled__CenterSection,
+  Styled__CenterSectionWrapper,
+  Styled__CenterSectionForm,
+  Styled__CenterSectionHeadline,
+  Styled__ButtonWrapper,
+  Styled__Button
+} from './shared/StyledCommon';
 
 function Login(props) {
   const [isLoading, setLoading] = useState(false);
@@ -24,8 +35,7 @@ function Login(props) {
     let obj = {
       value,
       name,
-      onChange: handleChange,
-      className: styles.field__input
+      onChange: handleChange
     };
 
     if (name === 'identifier') {
@@ -93,31 +103,32 @@ function Login(props) {
   }
 
   return (
-    <div className={styles['section-wrapper']}>
-      <div className={styles['section']}>
-        <form onSubmit={onSubmit} className={styles['section-form']}>
-          <h4 className={styles['section-headline']}>Login to your account</h4>
+    <Styled__CenterSectionWrapper>
+      <Styled__CenterSection>
+        <Styled__CenterSectionForm onSubmit={onSubmit}>
+          <Styled__CenterSectionHeadline>
+            Login to your account
+          </Styled__CenterSectionHeadline>
 
-          <div className={styles.field}>
-            <label className={`${styles.field__label}`}>
-              Username or email
-            </label>
-            <input {...identifier} placeholder="Username or email" />
-          </div>
+          <Styled__Field>
+            <Styled__FieldLabel>Username or email</Styled__FieldLabel>
+            <Styled__FieldInput
+              {...identifier}
+              placeholder="Username or email"
+            />
+          </Styled__Field>
 
-          <div className={styles.field}>
-            <label className={styles.field__label}>Password</label>
-            <input {...password} placeholder="Password" />
-          </div>
+          <Styled__Field>
+            <Styled__FieldLabel>Password</Styled__FieldLabel>
+            <Styled__FieldInput {...password} placeholder="Password" />
+          </Styled__Field>
 
-          <div className={styles['btn-wrapper']}>
-            <button className={styles.btn} disabled={isLoading}>
-              Login
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+          <Styled__ButtonWrapper>
+            <Styled__Button disabled={isLoading}>Login</Styled__Button>
+          </Styled__ButtonWrapper>
+        </Styled__CenterSectionForm>
+      </Styled__CenterSection>
+    </Styled__CenterSectionWrapper>
   );
 }
 

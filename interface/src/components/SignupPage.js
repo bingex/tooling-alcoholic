@@ -3,8 +3,19 @@ import isEmpty from 'lodash/isEmpty';
 import Validator from 'validator';
 import { apiGetUser, apiUserSignupRequest } from '../utils/api';
 import { setErrors } from '../store/actions/commonActions';
-import styles from './../styles/common.css';
 import { connect } from 'react-redux';
+
+import {
+  Styled__Field,
+  Styled__FieldLabel,
+  Styled__FieldInput,
+  Styled__CenterSection,
+  Styled__CenterSectionWrapper,
+  Styled__CenterSectionForm,
+  Styled__CenterSectionHeadline,
+  Styled__ButtonWrapper,
+  Styled__Button
+} from './shared/StyledCommon';
 
 function SignupForm(props) {
   const [invalid, setInvalid] = useState(false);
@@ -125,10 +136,12 @@ function SignupForm(props) {
   }
 
   return (
-    <div className={styles['section-wrapper']}>
-      <div className={styles['section']}>
-        <form onSubmit={onSubmit} className={styles['section-form']}>
-          <h4 className={styles['section-headline']}>Join our community!</h4>
+    <Styled__CenterSectionWrapper>
+      <Styled__CenterSection>
+        <Styled__CenterSectionForm onSubmit={onSubmit}>
+          <Styled__CenterSectionHeadline>
+            Join our community!
+          </Styled__CenterSectionHeadline>
 
           <TextField
             label="Username"
@@ -147,23 +160,23 @@ function SignupForm(props) {
             error={props.errors.passwordConfirmation}
           />
 
-          <div className={styles['btn-wrapper']}>
-            <button className={styles.btn} disabled={isLoading || invalid}>
+          <Styled__ButtonWrapper>
+            <Styled__Button disabled={isLoading || invalid}>
               Sign up
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            </Styled__Button>
+          </Styled__ButtonWrapper>
+        </Styled__CenterSectionForm>
+      </Styled__CenterSection>
+    </Styled__CenterSectionWrapper>
   );
 }
 
 const TextField = ({ field, label, error }) => {
   return (
-    <div className={styles.field}>
-      <label className={styles.field__label}>{label}</label>
-      <input {...field} className={styles.field__input} placeholder={label} />
-    </div>
+    <Styled__Field>
+      <Styled__FieldLabel>{label}</Styled__FieldLabel>
+      <Styled__FieldInput {...field} placeholder={label} />
+    </Styled__Field>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 // State management
 import { addNewToolType } from '../store/actions/toolTypeActions';
@@ -12,8 +13,16 @@ import SelectPicture from './shared/SelectPicture';
 import { apiSetToolTypes } from '../utils/api';
 
 // Styles
-import stylesCommon from './../styles/common.css';
-import styles from './../styles/tool-type.css';
+import {
+  Styled__SideSection,
+  Styled__SideSectionHeadline,
+  Styled__ButtonCancel,
+  Styled__ButtonWrapper,
+  Styled__FieldLabel,
+  Styled__Field,
+  Styled__FieldInput,
+  Styled__Button
+} from './shared/StyledCommon';
 
 function SingleToolType(props) {
   const [typeName, setTypeName] = useState('');
@@ -71,45 +80,37 @@ function SingleToolType(props) {
     changePreviewPicture(null);
     setTypeName('');
   }
-
+  console.log(props.addAreaIsOpen);
   return (
-    <div
-      className={`${stylesCommon.addSection} ${stylesCommon.field} ${
-        props.addAreaIsOpen ? stylesCommon.addSectionOpen : ''
-      }`}
-    >
-      <h4 className={stylesCommon.addSectionHeadline}>Add new tool type:</h4>
+    <Styled__SideSection addAreaIsOpen={props.addAreaIsOpen}>
+      <Styled__SideSectionHeadline>
+        Add new tool type:
+      </Styled__SideSectionHeadline>
 
-      <div className={stylesCommon.field}>
-        <label className={stylesCommon.field__label}>Type name:</label>
-        <input
+      <Styled__Field>
+        <Styled__FieldLabel>Type name:</Styled__FieldLabel>
+        <Styled__FieldInput
           type="text"
-          className={stylesCommon.field__input}
           placeholder="Name"
           value={typeName}
           onChange={event => {
             setTypeName(event.target.value);
           }}
         />
-      </div>
+      </Styled__Field>
 
       <SelectPicture
         previewPicture={previewPicture}
         changePreviewPicture={changePreviewPicture}
       />
 
-      <div className={stylesCommon['btn-wrapper']}>
-        <button
-          className={`${stylesCommon.btn} ${styles.btnCancel}`}
-          onClick={cancelAction}
-        >
+      <Styled__ButtonWrapper>
+        <Styled__ButtonCancel onClick={cancelAction}>
           Cancel
-        </button>
-        <button className={stylesCommon.btn} onClick={handleSubmit}>
-          Add
-        </button>
-      </div>
-    </div>
+        </Styled__ButtonCancel>
+        <Styled__Button onClick={handleSubmit}>Add</Styled__Button>
+      </Styled__ButtonWrapper>
+    </Styled__SideSection>
   );
 }
 

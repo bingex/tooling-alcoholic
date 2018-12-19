@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { apiDeleteToolType } from './../utils/api';
 import SingleToolType from './SingleToolType';
+import styled from 'styled-components';
 
 // State management
 import {
@@ -16,7 +17,80 @@ import { MdEdit } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 
 // Styles
-import styles from './../styles/tool-type.css';
+import { Styled__CircleButton } from './shared/StyledCommon';
+
+const Styled__ToolWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+
+  @media (max-width: 412px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+`;
+
+const Styled__ToolSection = styled.div`
+  max-width: 260px;
+  width: 100%;
+  height: 120px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background-color: var(--color-limed-spruce);
+  margin: 0 10px 20px 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  user-select: none;
+  color: var(--color-white);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  @media (max-width: 412px) {
+    min-width: calc(100% - 10px);
+    height: 80px;
+    margin: 0 5px 10px 5px;
+    padding: 10px;
+  }
+`;
+
+const Styled__ToolActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Styled__ToolPicture = styled.img`
+  height: 80px;
+
+  @media (max-width: 412px) {
+    height: 50px;
+  }
+`;
+
+const Styled__ToolIcon = `
+  cursor: pointer;
+  color: var(--color-gumbo);
+  padding-right: 10px;
+  transition: all 0.4s;
+
+  :hover {
+    color: var(--color-java);
+  }
+`;
+
+const Styled__ToolEditIcon = styled(MdEdit)`
+  ${Styled__ToolIcon};
+`;
+
+const Styled__ToolDeleteIcon = styled(MdDelete)`
+  ${Styled__ToolIcon};
+`;
 
 function ToolTypePage(props) {
   const [addAreaIsOpen, showAddArea] = useState(false);
@@ -59,40 +133,38 @@ function ToolTypePage(props) {
    * Build tool type list from array with data
    */
   const toolTypes = props.types.map((item, index) => (
-    <div className={styles.section} key={index}>
-      <div className={styles.section__actions}>
+    <Styled__ToolSection key={index}>
+      <Styled__ToolActions>
         <span>{item.name}</span>
         <span>
-          <MdEdit
+          <Styled__ToolEditIcon
             onClick={() => {
               editToolType(item.id);
             }}
-            className={styles.section__icon}
             size={24}
           />
-          <MdDelete
+          <Styled__ToolDeleteIcon
             onClick={() => {
               deleteToolType(item.id);
             }}
-            className={styles.section__icon}
             size={24}
           />
         </span>
-      </div>
-      <img className={styles.section__picture} src={item.picture} />
-    </div>
+      </Styled__ToolActions>
+      <Styled__ToolPicture src={item.picture} />
+    </Styled__ToolSection>
   ));
 
   return (
-    <div className={styles.wrapper}>
+    <Styled__ToolWrapper>
       {toolTypes}
 
-      <button className={styles.addButton} onClick={showAddArea}>
+      <Styled__CircleButton onClick={showAddArea}>
         <FaPlus size={20} />
-      </button>
+      </Styled__CircleButton>
 
       <SingleToolType addAreaIsOpen={addAreaIsOpen} showAddArea={showAddArea} />
-    </div>
+    </Styled__ToolWrapper>
   );
 }
 

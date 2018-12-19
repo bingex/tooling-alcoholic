@@ -1,6 +1,16 @@
 import React, { useRef } from 'react';
-import styles from './../../styles/select-picture.css';
-import stylesCommon from './../../styles/common.css';
+import styled from 'styled-components';
+import { Styled__Field, Styled__FieldLabel } from './StyledCommon';
+
+const Styled__FileInput = styled.input`
+  margin-top: 5px;
+`;
+const Styled__Preview = styled.img`
+  height: 128px;
+  width: 128px;
+  padding: 20px;
+  margin: 0 auto;
+`;
 
 function SelectPicture(props) {
   const imageElement = useRef(null);
@@ -23,22 +33,19 @@ function SelectPicture(props) {
   }
 
   return (
-    <div className={stylesCommon.field}>
-      <label className={stylesCommon.field__label}>Select picture:</label>
-      <input
+    <Styled__Field>
+      <Styled__FieldLabel>Select picture:</Styled__FieldLabel>
+
+      <Styled__FileInput
         type="file"
         onChange={changePreview}
         ref={imageElement}
-        className={styles.selectPicture}
       />
+
       {props.previewPicture && (
-        <img
-          className={styles.picturePreview}
-          src={props.previewPicture}
-          alt="Picture preview..."
-        />
+        <Styled__Preview src={props.previewPicture} alt="Picture preview..." />
       )}
-    </div>
+    </Styled__Field>
   );
 }
 
