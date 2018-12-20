@@ -16,7 +16,7 @@ export const Styled__FieldLabel = styled.label`
 export const Styled__FieldInput = styled.input`
   margin-top: 5px;
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   border-radius: var(--border-radius);
 

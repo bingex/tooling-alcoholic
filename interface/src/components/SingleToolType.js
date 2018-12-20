@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // State management
@@ -26,6 +26,22 @@ import {
 function SingleToolType(props) {
   const [typeName, setTypeName] = useState('');
   const [previewPicture, changePreviewPicture] = useState(null);
+
+  /**
+   * Set name and picture if it is edit
+   */
+  useEffect(
+    () => {
+      if (props.toolTypeToModify) {
+        setTypeName(props.toolTypeToModify.name);
+        changePreviewPicture(props.toolTypeToModify.picture);
+      } else {
+        setTypeName('');
+        changePreviewPicture(null);
+      }
+    },
+    [props.modifySectionIsOpen]
+  );
 
   /**
    * Call API to add new or edit existing tool type
@@ -95,7 +111,7 @@ function SingleToolType(props) {
   return (
     <Styled__SideSection modifySectionIsOpen={props.modifySectionIsOpen}>
       <Styled__SideSectionHeadline>
-        Add new tool type:
+        Add / edit tool type:
       </Styled__SideSectionHeadline>
 
       <Styled__Field>

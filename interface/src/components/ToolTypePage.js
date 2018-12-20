@@ -21,6 +21,7 @@ import { Styled__CircleButton } from './shared/StyledCommon';
 
 function ToolTypePage(props) {
   const [modifySectionIsOpen, showModifyToolSection] = useState(false);
+  const [toolTypeToModify, setToolTypeToModify] = useState(null);
 
   /**
    * Gets all tools from server on initial stage
@@ -36,17 +37,13 @@ function ToolTypePage(props) {
   function deleteToolType(id) {
     apiDeleteToolType(id)
       .then(response => {
-        if (response.data.success) {
+        if (response.data && response.data.success) {
           props.removeToolType(id);
         }
       })
       .catch(errors => {
         if (errors.response) props.setErrors(errors.response.data);
       });
-  }
-
-  function editToolType() {
-    // TODO: ADD LATER
   }
 
   // Renders tool type list from store data
@@ -57,7 +54,8 @@ function ToolTypePage(props) {
         <span>
           <Styled__ToolEditIcon
             onClick={() => {
-              editToolType(item.id);
+              setToolTypeToModify(item);
+              showModifyToolSection(true);
             }}
             size={24}
           />
@@ -79,6 +77,7 @@ function ToolTypePage(props) {
 
       <Styled__CircleButton
         onClick={() => {
+          setToolTypeToModify(null);
           showModifyToolSection(true);
         }}
       >
@@ -88,6 +87,7 @@ function ToolTypePage(props) {
       <SingleToolType
         modifySectionIsOpen={modifySectionIsOpen}
         showModifyToolSection={showModifyToolSection}
+        toolTypeToModify={toolTypeToModify}
       />
     </Styled__ToolWrapper>
   );
