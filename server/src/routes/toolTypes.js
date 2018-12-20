@@ -44,7 +44,7 @@ router.delete('/:id', (req, res) => {
     where: { id: req.params.id }
   })
     .destroy()
-    .then(response => res.json({ success: true }))
+    .then(() => res.json({ success: true }))
     .catch(error =>
       res.status(500).json({ error: error.message ? error.message : error })
     );

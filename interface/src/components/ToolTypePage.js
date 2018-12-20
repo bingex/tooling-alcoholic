@@ -19,6 +19,91 @@ import { MdDelete } from 'react-icons/md';
 // Styles
 import { Styled__CircleButton } from './shared/StyledCommon';
 
+function ToolTypePage(props) {
+  const [modifySectionIsOpen, showModifyToolSection] = useState(false);
+
+  /**
+   * Gets all tools from server on initial stage
+   */
+  useEffect(() => {
+    props.getToolTypes();
+  }, {});
+
+  /**
+   * Sends request to remove tool type by id
+   * @param {Number} id
+   */
+  function deleteToolType(id) {
+    apiDeleteToolType(id)
+      .then(response => {
+        if (response.data.success) {
+          props.removeToolType(id);
+        }
+      })
+      .catch(errors => {
+        if (errors.response) props.setErrors(errors.response.data);
+      });
+  }
+
+  function editToolType() {
+    // TODO: ADD LATER
+  }
+
+  // Renders tool type list from store data
+  const toolTypes = props.types.map((item, index) => (
+    <Styled__ToolSection key={index}>
+      <Styled__ToolActions>
+        <span>{item.name}</span>
+        <span>
+          <Styled__ToolEditIcon
+            onClick={() => {
+              editToolType(item.id);
+            }}
+            size={24}
+          />
+          <Styled__ToolDeleteIcon
+            onClick={() => {
+              deleteToolType(item.id);
+            }}
+            size={24}
+          />
+        </span>
+      </Styled__ToolActions>
+      <Styled__ToolPicture src={item.picture} />
+    </Styled__ToolSection>
+  ));
+
+  return (
+    <Styled__ToolWrapper>
+      {toolTypes}
+
+      <Styled__CircleButton
+        onClick={() => {
+          showModifyToolSection(true);
+        }}
+      >
+        <FaPlus size={20} />
+      </Styled__CircleButton>
+
+      <SingleToolType
+        modifySectionIsOpen={modifySectionIsOpen}
+        showModifyToolSection={showModifyToolSection}
+      />
+    </Styled__ToolWrapper>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    types: state.toolTypeReducer.types
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { getToolTypes, removeToolType, setErrors }
+)(ToolTypePage);
+
 const Styled__ToolWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -91,90 +176,3 @@ const Styled__ToolEditIcon = styled(MdEdit)`
 const Styled__ToolDeleteIcon = styled(MdDelete)`
   ${Styled__ToolIcon};
 `;
-
-function ToolTypePage(props) {
-  const [addAreaIsOpen, showAddArea] = useState(false);
-
-  /**
-   * Gets all tools from server on initial stage
-   */
-  useEffect(() => {
-    props.getToolTypes();
-  }, {});
-
-  /**
-   * Shows area for adding new tool type.
-   */
-  function showAddArea() {
-    showAddArea(true);
-  }
-
-  /**
-   * Sends request to remove tool type by id
-   * @param {Number} id
-   */
-  function deleteToolType(id) {
-    apiDeleteToolType(id)
-      .then(response => {
-        if (response.data.success) {
-          props.removeToolType(id);
-        }
-      })
-      .catch(errors => {
-        if (errors.response) props.setErrors(errors.response.data);
-      });
-  }
-
-  function editToolType() {
-    // TODO: ADD LATER
-  }
-
-  /**
-   * Build tool type list from array with data
-   */
-  const toolTypes = props.types.map((item, index) => (
-    <Styled__ToolSection key={index}>
-      <Styled__ToolActions>
-        <span>{item.name}</span>
-        <span>
-          <Styled__ToolEditIcon
-            onClick={() => {
-              editToolType(item.id);
-            }}
-            size={24}
-          />
-          <Styled__ToolDeleteIcon
-            onClick={() => {
-              deleteToolType(item.id);
-            }}
-            size={24}
-          />
-        </span>
-      </Styled__ToolActions>
-      <Styled__ToolPicture src={item.picture} />
-    </Styled__ToolSection>
-  ));
-
-  return (
-    <Styled__ToolWrapper>
-      {toolTypes}
-
-      <Styled__CircleButton onClick={showAddArea}>
-        <FaPlus size={20} />
-      </Styled__CircleButton>
-
-      <SingleToolType addAreaIsOpen={addAreaIsOpen} showAddArea={showAddArea} />
-    </Styled__ToolWrapper>
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    types: state.toolTypeReducer.types
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  { getToolTypes, removeToolType, setErrors }
-)(ToolTypePage);

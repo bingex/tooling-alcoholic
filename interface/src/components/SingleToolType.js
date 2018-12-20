@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 
 // State management
-import { addNewToolType } from '../store/actions/toolTypeActions';
+import { modifyToolType } from '../store/actions/toolTypeActions';
 import { setErrors } from '../store/actions/commonActions';
 
 // Components
@@ -29,60 +28,72 @@ function SingleToolType(props) {
   const [previewPicture, changePreviewPicture] = useState(null);
 
   /**
-   * Call API to add new tool type
-   * and after success add it also to store
+   * Call API to add new or edit existing tool type
+   * After success add it also to reduz store
    */
   function handleSubmit() {
-    // Check if name not empty and length > 2
-    if (typeName.length < 2) {
-      props.setErrors({
-        toolTypeName: 'Tool type name should be at least 2 symbols'
-      });
-      return false;
-    }
+    if (isValid()) {
+      apiSetToolTypes({ name: typeName, picture: previewPicture })
+        .then(response => {
+          if (response.data && response.data.success) {
+            // Call redux action to modify store
+            props.modifyToolType(response.data.id, typeName, previewPicture);
 
-    // Check if it has picture
-    if (!previewPicture) {
-      props.setErrors({
-        toolTypePicture: 'Please add tool type picture'
-      });
-      return false;
+            // Clear related states
+            stopExecution();
+          } else {
+            props.setErrors({
+              toolTypeName: 'Something wrong with such tool type name ...'
+            });
+          }
+        })
+        .catch(errors => {
+          if (errors.response) {
+            props.setErrors(errors.response.data);
+          }
+        });
     }
-
-    // Request to server
-    apiSetToolTypes({ name: typeName, picture: previewPicture })
-      .then(response => {
-        if (response.data.success) {
-          props.addNewToolType(response.data.id, typeName, previewPicture);
-          props.showAddArea(false);
-          setTypeName('');
-          changePreviewPicture(null);
-        } else {
-          props.setErrors({
-            toolTypeName: 'Something wrong with such tool type name ...'
-          });
-        }
-      })
-      .catch(errors => {
-        if (errors.response) {
-          props.setErrors(errors.response.data);
-        }
-      });
   }
 
   /**
-   * Cancel adding new tool type
-   * Refresh preview picture
-   * Clean new tool type name
+   * Minimal validation for tool types
+   * Check if name has at least 2 chars and is there is uploaded picture
    */
-  function cancelAction() {
-    props.showAddArea(false);
+  function isValid() {
+    let errors = {};
+
+    if (typeName.length < 2) {
+      errors.toolTypeName = 'Tool type name should be at least 2 symbols';
+      return false;
+    }
+
+    if (!previewPicture) {
+      errors.toolTypePicture = 'Please add tool type picture';
+      return false;
+    }
+
+    if (Object.keys(errors).length) {
+      props.setErrors({
+        toolTypeName: 'Tool type name should be at least 2 symbols'
+      });
+    }
+
+    return true;
+  }
+
+  /**
+   * Call parent method to hide single tool type section
+   * Clear type name state
+   * Clear type picture state
+   */
+  function stopExecution() {
+    props.showModifyToolSection(false);
     changePreviewPicture(null);
     setTypeName('');
   }
-  console.log(props.addAreaIsOpen);
+
   return (
-    <Styled__SideSection addAreaIsOpen={props.addAreaIsOpen}>
+    <Styled__SideSection modifySectionIsOpen={props.modifySectionIsOpen}>
       <Styled__SideSectionHeadline>
         Add new tool type:
       </Styled__SideSectionHeadline>
@@ -105,7 +116,7 @@ function SingleToolType(props) {
       />
 
       <Styled__ButtonWrapper>
-        <Styled__ButtonCancel onClick={cancelAction}>
+        <Styled__ButtonCancel onClick={stopExecution}>
           Cancel
         </Styled__ButtonCancel>
         <Styled__Button onClick={handleSubmit}>Add</Styled__Button>
@@ -116,5 +127,5 @@ function SingleToolType(props) {
 
 export default connect(
   null,
-  { addNewToolType, setErrors }
+  { modifyToolType, setErrors }
 )(SingleToolType);

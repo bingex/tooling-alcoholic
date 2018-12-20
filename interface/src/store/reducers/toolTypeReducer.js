@@ -1,8 +1,4 @@
-import {
-  GET_TOOL_TYPES,
-  ADD_NEW_TOOL_TYPE,
-  REMOVE_TOOL_TYPE
-} from './../types';
+import { GET_TOOL_TYPES, MODIFY_TOOL_TYPE, REMOVE_TOOL_TYPE } from './../types';
 
 const initialState = {
   types: []
@@ -15,7 +11,7 @@ export default (state = initialState, action = {}) => {
         ...state,
         types: action.types
       };
-    case ADD_NEW_TOOL_TYPE:
+    case MODIFY_TOOL_TYPE:
       const { name, picture, id } = action;
       return {
         ...state,

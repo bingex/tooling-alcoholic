@@ -109,11 +109,15 @@ export const Styled__SideSection = styled.div`
   box-sizing: border-box;
   transition: all 0.2s;
   box-shadow: var(--shadow);
-  transform: translateX(${props => (props.addAreaIsOpen ? '0' : '320px')});
+  transform: translateX(
+    ${props => (props.modifySectionIsOpen ? '0' : '320px')}
+  );
 
   @media (max-width: 412px) {
     width: 100%;
-    transform: translateX(${props => (props.addAreaIsOpen ? '0' : '100%')});
+    transform: translateX(
+      ${props => (props.modifySectionIsOpen ? '0' : '100%')}
+    );
   }
 `;
 

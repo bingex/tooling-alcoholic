@@ -13,6 +13,14 @@ exports.up = function(knex, Promise) {
       .foreign('user_id')
       .references('id')
       .inTable('users');
+    table
+      .integer('tool_type_id')
+      .unsigned()
+      .notNullable();
+    table
+      .foreign('tool_type_id')
+      .references('id')
+      .inTable('tool_types');
     table.timestamps();
   });
 };

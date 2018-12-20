@@ -1,5 +1,5 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const GET_TOOL_TYPES = 'GET_TOOL_TYPES';
-export const ADD_NEW_TOOL_TYPE = 'ADD_NEW_TOOL_TYPE';
+export const MODIFY_TOOL_TYPE = 'MODIFY_TOOL_TYPE';
 export const REMOVE_TOOL_TYPE = 'REMOVE_TOOL_TYPE';
 export const SET_ERRORS = 'SET_ERRORS';
