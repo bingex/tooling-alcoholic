@@ -9,7 +9,7 @@ import { setErrors } from '../store/actions/commonActions';
 import SelectPicture from './shared/SelectPicture';
 
 // Helpers
-import { apiSetToolTypes } from '../utils/api';
+import { apiAddToolTypes, apiUpdateToolTypes } from '../utils/api';
 
 // Styles
 import {
@@ -27,9 +27,7 @@ function SingleToolType(props) {
   const [typeName, setTypeName] = useState('');
   const [previewPicture, changePreviewPicture] = useState(null);
 
-  /**
-   * Set name and picture if it is edit
-   */
+  // Initial lifecycle hook for setting name and picture
   useEffect(
     () => {
       if (props.toolTypeToModify) {
@@ -49,25 +47,42 @@ function SingleToolType(props) {
    */
   function handleSubmit() {
     if (isValid()) {
-      apiSetToolTypes({ name: typeName, picture: previewPicture })
-        .then(response => {
-          if (response.data && response.data.success) {
-            // Call redux action to modify store
-            props.modifyToolType(response.data.id, typeName, previewPicture);
+      const params = { name: typeName, picture: previewPicture };
 
-            // Clear related states
-            stopExecution();
-          } else {
-            props.setErrors({
-              toolTypeName: 'Something wrong with such tool type name ...'
-            });
-          }
+      if (props.toolTypeToModify) {
+        apiUpdateToolTypes({
+          ...params,
+          id: props.toolTypeToModify.id
         })
-        .catch(errors => {
-          if (errors.response) {
-            props.setErrors(errors.response.data);
-          }
-        });
+          .then(handleSuccess)
+          .catch(handleError);
+      } else {
+        apiAddToolTypes(params)
+          .then(handleSuccess)
+          .catch(handleError);
+      }
+    }
+  }
+
+  // Success handler after add / update tool type
+  function handleSuccess(response) {
+    if (response.data && response.data.success) {
+      // Call redux action to modify store
+      props.modifyToolType(response.data.id, typeName, previewPicture);
+
+      // Clear related states
+      stopExecution();
+    } else {
+      props.setErrors({
+        toolType: 'Something gone wrong ...'
+      });
+    }
+  }
+
+  // Error handler after add / update tool type
+  function handleError(errors) {
+    if (errors.response) {
+      props.setErrors(errors.response.data);
     }
   }
 
@@ -80,18 +95,17 @@ function SingleToolType(props) {
 
     if (typeName.length < 2) {
       errors.toolTypeName = 'Tool type name should be at least 2 symbols';
-      return false;
     }
 
     if (!previewPicture) {
       errors.toolTypePicture = 'Please add tool type picture';
-      return false;
     }
 
     if (Object.keys(errors).length) {
       props.setErrors({
         toolTypeName: 'Tool type name should be at least 2 symbols'
       });
+      return false;
     }
 
     return true;
@@ -135,7 +149,7 @@ function SingleToolType(props) {
         <Styled__ButtonCancel onClick={stopExecution}>
           Cancel
         </Styled__ButtonCancel>
-        <Styled__Button onClick={handleSubmit}>Add</Styled__Button>
+        <Styled__Button onClick={handleSubmit}>Save</Styled__Button>
       </Styled__ButtonWrapper>
     </Styled__SideSection>
   );

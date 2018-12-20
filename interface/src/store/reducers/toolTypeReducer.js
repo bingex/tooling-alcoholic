@@ -13,10 +13,17 @@ export default (state = initialState, action = {}) => {
       };
     case MODIFY_TOOL_TYPE:
       const { name, picture, id } = action;
+      const isUpdating = state.types.find(item => item.id == id);
+
       return {
         ...state,
-        types: [...state.types, { name, picture, id }]
+        types: isUpdating
+          ? state.types.map(item =>
+              item.id == id ? { name, picture, id } : item
+            )
+          : [...state.types, { name, picture, id }]
       };
+
     case REMOVE_TOOL_TYPE:
       return {
         ...state,

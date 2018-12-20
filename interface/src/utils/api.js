@@ -18,8 +18,12 @@ export function apiGetToolTypes() {
   return axios.get(`${API_URL}/api/tool_types`);
 }
 
-export function apiSetToolTypes(data) {
+export function apiAddToolTypes(data) {
   return axios.post(`${API_URL}/api/tool_types`, data);
+}
+
+export function apiUpdateToolTypes(data) {
+  return axios.put(`${API_URL}/api/tool_types/${data.id}`, data);
 }
 
 export function apiDeleteToolType(id) {

@@ -33,6 +33,20 @@ router.post('/', (req, res) => {
   });
 });
 
+router.put('/:id', (req, res) => {
+  const { name, picture } = req.body;
+
+  ToolType.forge(
+    {
+      id: req.params.id
+    },
+    { hasTimestamps: true }
+  )
+    .save({ name, picture }, { patch: true })
+    .then(response => res.json({ success: true, id: response.id }))
+    .catch(error => res.status(500).json({ error }));
+});
+
 router.delete('/:id', (req, res) => {
   // TODO: CHECK IF THERE IS SOME TOOL WITH SOME TYPE THAT WE WANT TO DELETE
   // https://arjunphp.com/bookshelf-js-deleting-row-related-rows-many-many-relationship/
