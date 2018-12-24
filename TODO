@@ -3,6 +3,7 @@ Roadmap to remember each time opening code editor:
  ✔ Re-think component model. Component should contains styles inside? Or be in the same folder? @done (18-12-19 12:43)
  ✔ Remove css-modules looader from webpack config. @done (18-12-19 12:43)
  ✔ Implement type edit. Think about making shared component for add/edit. @done(18-12-20 18:04)
+ ☐ Implement company CRUD and iterface component. Also add it to users as field.
  ☐ Start making tools page (backend CRUD). Think about relations with users as owner and tool types. Think about fields that should be there.
  ☐ Make interface component for tools.
  ☐ Implement deep type tool deletion.

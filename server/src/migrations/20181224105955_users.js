@@ -9,6 +9,14 @@ exports.up = function(knex, Promise) {
       .string('email')
       .notNullable()
       .unique();
+    table
+      .integer('company_id')
+      .unsigned()
+      .notNullable();
+    table
+      .foreign('company_id')
+      .references('id')
+      .inTable('companies');
     table.string('password_digest').notNullable();
     table.timestamps();
   });

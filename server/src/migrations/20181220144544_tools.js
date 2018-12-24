@@ -6,14 +6,6 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique();
     table
-      .integer('user_id')
-      .unsigned()
-      .notNullable();
-    table
-      .foreign('user_id')
-      .references('id')
-      .inTable('users');
-    table
       .integer('tool_type_id')
       .unsigned()
       .notNullable();

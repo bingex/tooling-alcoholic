@@ -7,6 +7,7 @@ import Me from './components/Me';
 import NavigationBar from './components/NavigationBar';
 import NotFound from './components/NotFound';
 import ToolTypePage from './components/ToolTypePage';
+import CompaniesPage from './components/CompaniesPage';
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
           <Route path="/signup" component={SignupPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/tool_types" component={ToolTypePage} />
+          <Route path="/companies" component={CompaniesPage} />
           <Route path="/me" component={Me} />
           <Route component={NotFound} />
         </Switch>

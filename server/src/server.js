@@ -5,6 +5,7 @@ import users from './routes/users';
 import auth from './routes/auth';
 import tools from './routes/tools';
 import toolTypes from './routes/toolTypes';
+import companies from './routes/companies';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/tools', tools);
 app.use('/api/tool_types', toolTypes);
+app.use('/api/companies', companies);
 
 // Start app listening on port
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));

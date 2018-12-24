@@ -7,6 +7,63 @@ import { setCurrentUser } from './../store/actions/authActions';
 import setAuthToken from './../utils/setAuthToken';
 import { MdExitToApp } from 'react-icons/md';
 
+function NavigationBar(props) {
+  function logout() {
+    localStorage.removeItem('jwtToken');
+    setAuthToken(false);
+    props.setCurrentUser({});
+    props.history.push('/');
+  }
+
+  return (
+    <Styled__NavBar>
+      <Styled__NavBarAppName>My tools</Styled__NavBarAppName>
+      <div>
+        {props.isAuthenticated ? (
+          <div>
+            <Styled__NavLink exact to="/" activeClassName="link-active">
+              Homepage
+            </Styled__NavLink>
+            <Styled__NavLink
+              exact
+              to="/companies"
+              activeClassName="link-active"
+            >
+              Companies
+            </Styled__NavLink>
+            <Styled__NavLink to="/tool_types" activeClassName="link-active">
+              Tool types
+            </Styled__NavLink>
+          </div>
+        ) : (
+          <div>
+            <Styled__NavLink to="/signup" activeClassName="link-active">
+              Signup
+            </Styled__NavLink>
+            <Styled__NavLink to="/login" activeClassName="link-active">
+              Login
+            </Styled__NavLink>
+          </div>
+        )}
+      </div>
+      <Styled__NavBarLogout onClick={logout} size={24} />
+    </Styled__NavBar>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authReducer.isAuthenticated
+  };
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { setCurrentUser }
+  )(NavigationBar)
+);
+
 const Styled__NavBar = styled.div`
   background-color: var(--color-scooter);
   position: fixed;
@@ -61,53 +118,3 @@ const Styled__NavBarLogout = styled(MdExitToApp)`
     color: var(--color-white);
   }
 `;
-
-function NavigationBar(props) {
-  function logout() {
-    localStorage.removeItem('jwtToken');
-    setAuthToken(false);
-    props.setCurrentUser({});
-    props.history.push('/');
-  }
-
-  return (
-    <Styled__NavBar>
-      <Styled__NavBarAppName>My tools</Styled__NavBarAppName>
-      <div>
-        {props.isAuthenticated ? (
-          <div>
-            <Styled__NavLink exact to="/" activeClassName="link-active">
-              Homepage
-            </Styled__NavLink>
-            <Styled__NavLink to="/tool_types" activeClassName="link-active">
-              Tool types
-            </Styled__NavLink>
-          </div>
-        ) : (
-          <div>
-            <Styled__NavLink to="/signup" activeClassName="link-active">
-              Signup
-            </Styled__NavLink>
-            <Styled__NavLink to="/login" activeClassName="link-active">
-              Login
-            </Styled__NavLink>
-          </div>
-        )}
-      </div>
-      <Styled__NavBarLogout onClick={logout} size={24} />
-    </Styled__NavBar>
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: state.authReducer.isAuthenticated
-  };
-}
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { setCurrentUser }
-  )(NavigationBar)
-);
