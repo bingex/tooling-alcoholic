@@ -41,3 +41,7 @@ export function apiAddCompany(data) {
 export function apiUpdateCompany(data) {
   return axios.put(`${API_URL}/api/companies/${data.id}`, data);
 }
+
+export function apiDeleteCompany(id) {
+  return axios.delete(`${API_URL}/api/companies/${id}`);
+}

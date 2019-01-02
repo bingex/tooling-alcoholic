@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 export const Styled__Field = styled.div`
   width: 100%;
@@ -158,4 +160,69 @@ export const Styled__CircleButton = styled.button`
     height: 60px;
     width: 60px;
   }
+`;
+
+export const Styled__TileWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+
+  @media (max-width: 412px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+`;
+
+export const Styled__Tile = styled.div`
+  max-width: 260px;
+  width: 100%;
+  height: 120px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  background-color: var(--color-limed-spruce);
+  margin: 0 10px 20px 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  user-select: none;
+  color: var(--color-white);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  @media (max-width: 412px) {
+    min-width: calc(100% - 10px);
+    height: 80px;
+    margin: 0 5px 10px 5px;
+    padding: 10px;
+  }
+`;
+
+export const Styled__TileActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Styled__TileIcon = `
+  cursor: pointer;
+  color: var(--color-gumbo);
+  padding-right: 10px;
+  transition: all 0.4s;
+
+  :hover {
+    color: var(--color-java);
+  }
+`;
+
+export const Styled__TileEdit = styled(MdEdit)`
+  ${Styled__TileIcon};
+`;
+
+export const Styled__TileDelete = styled(MdDelete)`
+  ${Styled__TileIcon};
 `;

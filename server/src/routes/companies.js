@@ -32,6 +32,35 @@ router.post('/', (req, res) => {
   });
 });
 
+router.put('/:id', (req, res) => {
+  const { name } = req.body;
+
+  Company.forge(
+    {
+      id: req.params.id
+    },
+    { hasTimestamps: true }
+  )
+    .save({ name }, { patch: true })
+    .then(response => res.json({ success: true, id: response.id }))
+    .catch(error => res.status(500).json({ error }));
+});
+
+router.delete('/:id', (req, res) => {
+  if (!req.params.id) {
+    res.status(400).json({ id: 'id field is required' });
+  }
+
+  Company.query({
+    where: { id: req.params.id }
+  })
+    .destroy()
+    .then(() => res.json({ success: true }))
+    .catch(error =>
+      res.status(500).json({ error: error.message ? error.message : error })
+    );
+});
+
 function validateCompanyName(data) {
   let errors = {};
 

@@ -1,4 +1,4 @@
-import { SET_COMPANIES, MODIFY_COMPANY } from './../types';
+import { SET_COMPANIES, MODIFY_COMPANY, REMOVE_COMPANY } from './../types';
 import { apiGetCompanies } from './../../utils/api';
 
 export function getCompanies() {
@@ -21,5 +21,12 @@ export function modifyCompany(id, name) {
     type: MODIFY_COMPANY,
     id,
     name
+  };
+}
+
+export function removeCompany(id) {
+  return {
+    type: REMOVE_COMPANY,
+    id
   };
 }

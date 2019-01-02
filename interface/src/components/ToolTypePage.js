@@ -13,11 +13,16 @@ import { setErrors } from '../store/actions/commonActions';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { MdDelete } from 'react-icons/md';
 
 // Styles
-import { Styled__CircleButton } from './shared/StyledCommon';
+import {
+  Styled__CircleButton,
+  Styled__TileWrapper,
+  Styled__Tile,
+  Styled__TileActions,
+  Styled__TileEdit,
+  Styled__TileDelete
+} from './shared/StyledCommon';
 
 function ToolTypePage(props) {
   const [modifySectionIsOpen, showModifyToolSection] = useState(false);
@@ -48,31 +53,31 @@ function ToolTypePage(props) {
 
   // Renders tool type list from store data
   const toolTypes = props.types.map((item, index) => (
-    <Styled__ToolSection key={index}>
-      <Styled__ToolActions>
+    <Styled__Tile key={index}>
+      <Styled__TileActions>
         <span>{item.name}</span>
         <span>
-          <Styled__ToolEditIcon
+          <Styled__TileEdit
             onClick={() => {
               setToolTypeToModify(item);
               showModifyToolSection(true);
             }}
             size={24}
           />
-          <Styled__ToolDeleteIcon
+          <Styled__TileDelete
             onClick={() => {
               deleteToolType(item.id);
             }}
             size={24}
           />
         </span>
-      </Styled__ToolActions>
+      </Styled__TileActions>
       <Styled__ToolPicture src={item.picture} />
-    </Styled__ToolSection>
+    </Styled__Tile>
   ));
 
   return (
-    <Styled__ToolWrapper>
+    <Styled__TileWrapper>
       {toolTypes}
 
       <Styled__CircleButton
@@ -89,7 +94,7 @@ function ToolTypePage(props) {
         showModifyToolSection={showModifyToolSection}
         toolTypeToModify={toolTypeToModify}
       />
-    </Styled__ToolWrapper>
+    </Styled__TileWrapper>
   );
 }
 
@@ -104,75 +109,10 @@ export default connect(
   { getToolTypes, removeToolType, setErrors }
 )(ToolTypePage);
 
-const Styled__ToolWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 20px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-
-  @media (max-width: 412px) {
-    flex-direction: column;
-    justify-content: flex-start;
-    box-sizing: border-box;
-  }
-`;
-
-const Styled__ToolSection = styled.div`
-  max-width: 260px;
-  width: 100%;
-  height: 120px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  background-color: var(--color-limed-spruce);
-  margin: 0 10px 20px 10px;
-  padding: 15px;
-  box-sizing: border-box;
-  user-select: none;
-  color: var(--color-white);
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-
-  @media (max-width: 412px) {
-    min-width: calc(100% - 10px);
-    height: 80px;
-    margin: 0 5px 10px 5px;
-    padding: 10px;
-  }
-`;
-
-const Styled__ToolActions = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
 const Styled__ToolPicture = styled.img`
   height: 80px;
 
   @media (max-width: 412px) {
     height: 50px;
   }
-`;
-
-const Styled__ToolIcon = `
-  cursor: pointer;
-  color: var(--color-gumbo);
-  padding-right: 10px;
-  transition: all 0.4s;
-
-  :hover {
-    color: var(--color-java);
-  }
-`;
-
-const Styled__ToolEditIcon = styled(MdEdit)`
-  ${Styled__ToolIcon};
-`;
-
-const Styled__ToolDeleteIcon = styled(MdDelete)`
-  ${Styled__ToolIcon};
 `;
