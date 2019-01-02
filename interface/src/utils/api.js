@@ -33,3 +33,11 @@ export function apiDeleteToolType(id) {
 export function apiGetCompanies() {
   return axios.get(`${API_URL}/api/companies`);
 }
+
+export function apiAddCompany(data) {
+  return axios.post(`${API_URL}/api/companies`, data);
+}
+
+export function apiUpdateCompany(data) {
+  return axios.put(`${API_URL}/api/companies/${data.id}`, data);
+}

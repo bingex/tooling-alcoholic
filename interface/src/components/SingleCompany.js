@@ -2,14 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // State management
-import { modifyToolType } from '../store/actions/toolTypeActions';
+import { modifyCompany } from '../store/actions/companyActions';
 import { setErrors } from '../store/actions/commonActions';
 
-// Components
-import SelectPicture from './shared/SelectPicture';
-
 // Helpers
-import { apiAddToolTypes, apiUpdateToolTypes } from '../utils/api';
+import { apiAddCompany, apiUpdateCompany } from '../utils/api';
 
 // Styles
 import {
@@ -24,62 +21,59 @@ import {
 } from './shared/StyledCommon';
 
 function SingleToolType(props) {
-  const [typeName, setTypeName] = useState('');
-  const [previewPicture, changePreviewPicture] = useState(null);
+  const [companyName, setCompanyName] = useState('');
 
-  // Initial lifecycle hook for setting name and picture
+  // Initial lifecycle hook for name
   useEffect(
     () => {
-      if (props.toolTypeToModify) {
-        setTypeName(props.toolTypeToModify.name);
-        changePreviewPicture(props.toolTypeToModify.picture);
+      if (props.companyToModify) {
+        setCompanyName(props.companyToModify.name);
       } else {
-        setTypeName('');
-        changePreviewPicture(null);
+        setCompanyName('');
       }
     },
     [props.modifySectionIsOpen]
   );
 
   /**
-   * Call API to add new or edit existing tool type
+   * Call API to add new or edit existing company
    * After success add it also to redux store
    */
   function handleSubmit() {
     if (isValid()) {
-      const params = { name: typeName, picture: previewPicture };
+      const params = { name: companyName };
 
-      if (props.toolTypeToModify) {
-        apiUpdateToolTypes({
+      if (props.companyToModify) {
+        apiUpdateCompany({
           ...params,
-          id: props.toolTypeToModify.id
+          id: props.companyToModify.id
         })
           .then(handleSuccess)
           .catch(handleError);
       } else {
-        apiAddToolTypes(params)
+        apiAddCompany(params)
           .then(handleSuccess)
           .catch(handleError);
       }
     }
   }
 
-  // Success handler after add / update tool type
+  // Success handler after add / update company
   function handleSuccess(response) {
     if (response.data && response.data.success) {
       // Call redux action to modify store
-      props.modifyToolType(response.data.id, typeName, previewPicture);
+      props.modifyCompany(response.data.id, companyName);
 
       // Clear related states
       stopExecution();
     } else {
       props.setErrors({
-        toolType: 'Something gone wrong ...'
+        company: 'Something gone wrong ...'
       });
     }
   }
 
-  // Error handler after add / update tool type
+  // Error handler after add / update company
   function handleError(errors) {
     if (errors.response) {
       props.setErrors(errors.response.data);
@@ -87,22 +81,16 @@ function SingleToolType(props) {
   }
 
   /**
-   * Minimal validation for tool types
-   * Check if name has at least 2 chars and is there is uploaded picture
+   * Minimal validation for companies
+   * Check if name has at least 2 chars
    */
   function isValid() {
     let errors = {};
 
-    if (typeName.length < 2) {
-      errors.toolTypeName = 'Tool type name should be at least 2 symbols';
-    }
-
-    if (!previewPicture) {
-      errors.toolTypePicture = 'Please add tool type picture';
-    }
-
-    if (Object.keys(errors).length) {
-      props.setErrors(errors);
+    if (companyName.length < 2) {
+      props.setErrors({
+        companyName: 'Company name should be at least 2 symbols'
+      });
       return false;
     }
 
@@ -110,38 +98,31 @@ function SingleToolType(props) {
   }
 
   /**
-   * Call parent method to hide single tool type section
+   * Call parent method to hide single company section
    * Clear type name state
-   * Clear type picture state
    */
   function stopExecution() {
-    props.showModifyToolSection(false);
-    changePreviewPicture(null);
-    setTypeName('');
+    props.showModifyCompanySection(false);
+    setCompanyName('');
   }
 
   return (
     <Styled__SideSection modifySectionIsOpen={props.modifySectionIsOpen}>
       <Styled__SideSectionHeadline>
-        Add / edit tool type:
+        Add / edit company:
       </Styled__SideSectionHeadline>
 
       <Styled__Field>
-        <Styled__FieldLabel>Type name:</Styled__FieldLabel>
+        <Styled__FieldLabel>Company name:</Styled__FieldLabel>
         <Styled__FieldInput
           type="text"
           placeholder="Name"
-          value={typeName}
+          value={companyName}
           onChange={event => {
-            setTypeName(event.target.value);
+            setCompanyName(event.target.value);
           }}
         />
       </Styled__Field>
-
-      <SelectPicture
-        previewPicture={previewPicture}
-        changePreviewPicture={changePreviewPicture}
-      />
 
       <Styled__ButtonWrapper>
         <Styled__ButtonCancel onClick={stopExecution}>
@@ -155,5 +136,5 @@ function SingleToolType(props) {
 
 export default connect(
   null,
-  { modifyToolType, setErrors }
+  { modifyCompany, setErrors }
 )(SingleToolType);

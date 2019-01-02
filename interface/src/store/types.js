@@ -4,3 +4,4 @@ export const MODIFY_TOOL_TYPE = 'MODIFY_TOOL_TYPE';
 export const REMOVE_TOOL_TYPE = 'REMOVE_TOOL_TYPE';
 export const SET_ERRORS = 'SET_ERRORS';
 export const SET_COMPANIES = 'SET_COMPANIES';
+export const MODIFY_COMPANY = 'MODIFY_COMPANY';
