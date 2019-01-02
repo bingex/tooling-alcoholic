@@ -29,3 +29,7 @@ export function apiUpdateToolTypes(data) {
 export function apiDeleteToolType(id) {
   return axios.delete(`${API_URL}/api/tool_types/${id}`);
 }
+
+export function apiGetCompanies() {
+  return axios.get(`${API_URL}/api/companies`);
+}
