@@ -45,3 +45,15 @@ export function apiUpdateCompany(data) {
 export function apiDeleteCompany(id) {
   return axios.delete(`${API_URL}/api/companies/${id}`);
 }
+
+export function apiGetUserTools(id) {
+  return axios.get(`${API_URL}/api/tools/${id}`);
+}
+
+export function apiAddTool(data) {
+  return axios.post(`${API_URL}/api/tools`, data);
+}
+
+export function apiUpdateTool(data) {
+  return axios.put(`${API_URL}/api/tools/${data.id}`, data);
+}

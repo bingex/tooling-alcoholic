@@ -36,6 +36,11 @@ export const Styled__FieldInput = styled.input`
   }
 `;
 
+export const Styled__FieldSelect = styled.select`
+  margin-top: 5px;
+  height: 38px;
+`;
+
 export const Styled__CenterSectionWrapper = styled.div`
   display: flex;
   justify-content: center;

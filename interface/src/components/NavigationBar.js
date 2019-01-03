@@ -34,6 +34,9 @@ function NavigationBar(props) {
             <Styled__NavLink to="/tool_types" activeClassName="link-active">
               Tool types
             </Styled__NavLink>
+            <Styled__NavLink to="/me" activeClassName="link-active">
+              Me
+            </Styled__NavLink>
           </div>
         ) : (
           <div>

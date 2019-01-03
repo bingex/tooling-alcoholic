@@ -6,3 +6,5 @@ export const SET_ERRORS = 'SET_ERRORS';
 export const SET_COMPANIES = 'SET_COMPANIES';
 export const MODIFY_COMPANY = 'MODIFY_COMPANY';
 export const REMOVE_COMPANY = 'REMOVE_COMPANY';
+export const SET_USER_TOOLS = 'SET_USER_TOOLS';
+export const MODIFY_TOOL = 'MODIFY_TOOL';

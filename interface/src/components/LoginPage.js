@@ -79,7 +79,10 @@ function Login(props) {
       setLoading(true);
       props.setErrors({});
 
-      apiLogin({ identifier: identifier.value, password: password.value }).then(
+      apiLogin({
+        identifier: identifier.value,
+        password: password.value
+      }).then(
         res => {
           if (res.data) {
             const token = res.data.token;
@@ -93,7 +96,9 @@ function Login(props) {
           if (err.response) {
             props.setErrors(err.response.data.errors);
           } else {
-            props.setErrors({ form: 'Something wrong with the connection' });
+            props.setErrors({
+              form: 'Something wrong with the connection'
+            });
           }
 
           setLoading(false);
