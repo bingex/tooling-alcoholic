@@ -17,14 +17,21 @@ function Me(props) {
   const [modifySectionIsOpen, showModifyToolSection] = useState(false);
   const [toolToModify, setToolToModify] = useState(null);
 
-  useEffect(() => {
-    if (props.user && props.user.id) {
-      props.getUserTools(props.user.id);
-    }
-  });
+  useEffect(
+    () => {
+      if (props.user && props.user.id) {
+        props.getUserTools(props.user.id);
+      }
+    },
+    [props.user]
+  );
+
+  const tools =
+    props.tools && props.tools.map((t, i) => <div key={i}>{t.name}</div>);
 
   return (
     <div>
+      {tools}
       <Styled__CircleButton
         onClick={() => {
           setToolToModify(null);
@@ -45,7 +52,8 @@ function Me(props) {
 
 function mapStateToProps(state) {
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    tools: state.toolReducer.userTools
   };
 }
 

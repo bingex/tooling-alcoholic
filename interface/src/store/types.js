@@ -8,3 +8,4 @@ export const MODIFY_COMPANY = 'MODIFY_COMPANY';
 export const REMOVE_COMPANY = 'REMOVE_COMPANY';
 export const SET_USER_TOOLS = 'SET_USER_TOOLS';
 export const MODIFY_TOOL = 'MODIFY_TOOL';
+export const REMOVE_TOOL = 'REMOVE_TOOL';

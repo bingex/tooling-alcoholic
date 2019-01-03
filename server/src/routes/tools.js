@@ -9,7 +9,7 @@ router.get('/:user', (req, res) => {
     select: ['name', 'tool_type_id', 'user_id'],
     where: { user_id: req.params.user }
   })
-    .fetch()
+    .fetchAll()
     .then(tools => {
       res.json({ tools: tools ? tools : [] });
     });
