@@ -231,3 +231,11 @@ export const Styled__TileEdit = styled(MdEdit)`
 export const Styled__TileDelete = styled(MdDelete)`
   ${Styled__TileIcon};
 `;
+
+export const Styled__ToolPicture = styled.img`
+  height: 80px;
+
+  @media (max-width: 412px) {
+    height: 50px;
+  }
+`;

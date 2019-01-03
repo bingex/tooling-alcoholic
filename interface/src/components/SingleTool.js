@@ -49,6 +49,16 @@ function SingleToolType(props) {
     props.getToolTypes();
   }, {});
 
+  // Set initial tool type
+  useEffect(
+    () => {
+      if (props.types && props.types.length) {
+        changeSelectedType(props.types[0].id);
+      }
+    },
+    [props.types]
+  );
+
   /**
    * Call API to add new or edit existing tool
    * After success add it also to redux store
@@ -114,10 +124,6 @@ function SingleToolType(props) {
 
     if (toolName.length < 2) {
       errors.toolName = 'Tool name should be at least 2 symbols';
-    }
-
-    if (!previewPicture) {
-      errors.toolPicture = 'Please add tool picture';
     }
 
     if (Object.keys(errors).length) {

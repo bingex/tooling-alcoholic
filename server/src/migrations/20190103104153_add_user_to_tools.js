@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     table
       .foreign('user_id')
       .references('id')
-      .inTable('tools');
+      .inTable('users');
   });
 };
 

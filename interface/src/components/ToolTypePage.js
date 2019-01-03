@@ -21,7 +21,8 @@ import {
   Styled__Tile,
   Styled__TileActions,
   Styled__TileEdit,
-  Styled__TileDelete
+  Styled__TileDelete,
+  Styled__ToolPicture
 } from './shared/StyledCommon';
 
 function ToolTypePage(props) {
@@ -108,11 +109,3 @@ export default connect(
   mapStateToProps,
   { getToolTypes, removeToolType, setErrors }
 )(ToolTypePage);
-
-const Styled__ToolPicture = styled.img`
-  height: 80px;
-
-  @media (max-width: 412px) {
-    height: 50px;
-  }
-`;

@@ -6,7 +6,7 @@ let router = express.Router();
 
 router.get('/:user', (req, res) => {
   Tool.query({
-    select: ['name', 'tool_type_id', 'user_id'],
+    select: ['name', 'tool_type_id', 'user_id', 'picture'],
     where: { user_id: req.params.user }
   })
     .fetchAll()

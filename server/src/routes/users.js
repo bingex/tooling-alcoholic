@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
       )
         .save()
         .then(user => res.json({ success: true }))
-        .catch(error => res.status(500).json({ error: err }));
+        .catch(error => res.status(500).json({ error }));
     } else {
       res.status(400).json(errors);
     }
