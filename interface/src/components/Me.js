@@ -8,7 +8,13 @@ import SingleTool from './SingleTool';
 import { getUserTools } from './../store/actions/toolActions';
 
 // Styles
-import { Styled__CircleButton } from './shared/StyledCommon';
+import {
+  Styled__CircleButton,
+  Styled__TileWrapper,
+  Styled__Tile,
+  Styled__TileActions,
+  Styled__ToolPicture
+} from './shared/StyledCommon';
 
 // Icons
 import { FaPlus } from 'react-icons/fa';
@@ -27,10 +33,16 @@ function Me(props) {
   );
 
   const tools =
-    props.tools && props.tools.map((t, i) => <div key={i}>{t.name}</div>);
+    props.tools &&
+    props.tools.map((t, i) => (
+      <Styled__Tile key={i}>
+        <Styled__TileActions>{t.name}</Styled__TileActions>
+        {t.picture ? <Styled__ToolPicture src={t.picture} /> : null}
+      </Styled__Tile>
+    ));
 
   return (
-    <div>
+    <Styled__TileWrapper>
       {tools}
       <Styled__CircleButton
         onClick={() => {
@@ -46,7 +58,7 @@ function Me(props) {
         toolToModify={toolToModify}
         user_id={props.user.id}
       />
-    </div>
+    </Styled__TileWrapper>
   );
 }
 

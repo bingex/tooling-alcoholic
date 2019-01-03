@@ -18,13 +18,14 @@ router.get('/:user', (req, res) => {
 router.post('/', (req, res) => {
   validateTool(req.body).then(({ errors, isValid }) => {
     if (isValid) {
-      const { name, tool_type_id, user_id } = req.body;
+      const { name, tool_type_id, user_id, picture } = req.body;
 
       Tool.forge(
         {
           name,
           tool_type_id,
-          user_id
+          user_id,
+          picture
         },
         { hasTimestamps: true }
       )

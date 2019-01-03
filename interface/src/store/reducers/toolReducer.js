@@ -12,14 +12,18 @@ export default (state = initialState, action = {}) => {
         userTools: action.tools
       };
     case MODIFY_TOOL:
-      const { name, id, tool_type_id, user_id } = action;
+      const { name, id, tool_type_id, user_id, picture } = action;
       const isUpdating = state.userTools.find(item => item.id == id);
 
       return {
         ...state,
         userTools: isUpdating
-          ? state.userTools.map(item => (item.id == id ? { name, id } : item))
-          : [...state.userTools, { name, id }]
+          ? state.userTools.map(item =>
+              item.id == id
+                ? { name, id, tool_type_id, user_id, picture }
+                : item
+            )
+          : [...state.userTools, { name, id, tool_type_id, user_id, picture }]
       };
 
     case REMOVE_TOOL:

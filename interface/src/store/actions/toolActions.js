@@ -16,12 +16,13 @@ export function setUserTools(tools) {
   };
 }
 
-export function modifyTool(id, name, tool_type, user_id) {
+export function modifyTool(id, name, tool_type, user_id, picture) {
   return {
     type: MODIFY_TOOL,
     id,
     name,
     tool_type,
-    user_id
+    user_id,
+    picture
   };
 }
